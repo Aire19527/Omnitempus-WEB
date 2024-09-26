@@ -1,0 +1,29 @@
+
+table {
+    width: 100%;
+}
+td,
+th {
+    width: auto;
+}
+.disegnTable {
+    font-size: 16px;
+    font-weight: 700;
+    color: black;
+    background-color: #e6e6e6 !important;
+}
+
+.design {
+    padding: 0;
+}
+
+.disegnRows {
+    font-size: 14px;
+    font-weight: 600;
+    color: black;
+}
+
+.no-data-cell {
+    width: 100%;
+    padding: 15px;
+}

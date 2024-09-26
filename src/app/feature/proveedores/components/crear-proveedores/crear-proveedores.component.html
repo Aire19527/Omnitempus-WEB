@@ -1,0 +1,49 @@
+<div class="container-title-header"></div>
+<div class="container-fluid container-padding">
+  <mat-stepper linear #stepper (selectionChange)="onStepChange($event)">
+    <mat-step [stepControl]="providerFormGroup" errorMessage="Los datos son requeridos.">
+      <form class="down mt-3" [formGroup]="providerFormGroup">
+        <div class="row">
+          <ng-template matStepLabel>Información básica</ng-template>
+          <div class="col-lg-6 col-md-6 col-sm-12">
+            <mat-form-field class="form-group" appearance="outline" class="matField">
+              <mat-label matLabel class="mb-2">Nombre</mat-label>
+              <input matInput formControlName="name" required maxlength="100" autocomplete="off" #nameProvider />
+              <mat-error *ngIf="providerFormGroup.get('name')?.errors?.['required']">
+                Este campo es obligatorio.
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="col-lg-6 col-md-6 col-sm-12">
+            <mat-form-field class="form-group" appearance="outline" class="matField">
+              <mat-label matLabel class="mb-2">NIT</mat-label>
+              <input matInput formControlName="nit" maxlength="20" min="0" autocomplete="off"
+                (keypress)="validateFormatNit($event)" />
+              <mat-error *ngIf="providerFormGroup.get('nit')?.errors?.['required']">
+                Este campo es obligatorio.
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="buttons">
+          <button mat-raised-button  class="btnSize cancelar text-dark" (click)="goBack()">
+            Cancelar
+          </button>
+          <button mat-raised-button class="btnSize guardar text-dark" (click)="saveUpdateProvider(true, 'guardar')"
+            [disabled]="providerFormGroup.invalid">
+            {{ titleButton }}
+          </button>
+          <button mat-raised-button  class="btnSize cancelar text-dark" (click)="saveUpdateProvider(false, 'siguiente')">
+            Siguiente
+          </button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="elementoFormGroup" errorMessage="Los datos son requeridos." [editable]="isEditable">
+      <app-elementos-proveedor>
+        <ng-template matStepLabel>Elementos</ng-template>
+      </app-elementos-proveedor>
+    </mat-step>
+  </mat-stepper>
+</div>

@@ -1,0 +1,70 @@
+<div align="end">
+  <button
+    mat-raised-button
+    class="guardar text-dark"
+    style="margin-top: 30px"
+    (click)="calculateQuotationValues()"
+    [disabled]="isStatusDisabled"
+  >
+    Calcular costos
+  </button>
+</div>
+
+<table class="default" style="margin-bottom: 25px !important">
+  <tr>
+    <th class="subTitleAcordeon">Costo salarial</th>
+    <td class="subTitleAcordeon" style="padding-left: 25px !important">
+      {{ costos.salaryCosts | currency }}
+    </td>
+  </tr>
+
+  <tr>
+    <th class="subTitleAcordeon">Costo de elementos y otros</th>
+    <td class="subTitleAcordeon" style="padding-left: 25px !important">
+      {{ costos.elementsCosts | currency }}
+    </td>
+  </tr>
+
+  <tr>
+    <th class="subTitleAcordeon">Costos de elementos transversales</th>
+    <td class="subTitleAcordeon" style="padding-left: 25px !important">
+      {{ costos.elementsTransversal | currency }}
+    </td>
+  </tr>
+
+
+  <tr>
+    <th class="subTitleAcordeon">Costo total</th>
+    <td class="subTitleAcordeon" style="padding-left: 25px !important">
+      {{ costos.totalCosts | currency }}
+    </td>
+  </tr>
+</table>
+
+<mat-accordion class="example-headers-align" multi>
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title class="subTitleAcordeon"
+        >Impuestos y márgenes
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <app-impuesto-margenes
+      [dataSource]="dataSourceTaxesMargin"
+    ></app-impuesto-margenes>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title class="subTitleAcordeon"
+        >Tarifa mensual
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <app-escolta-personas
+      [principalInfoSubChargesQuotation]="principalInfoSubChargesQuotation"
+      [costos]="costos"
+      (costosRecalculados)="reloadData($event)"
+    ></app-escolta-personas>
+  </mat-expansion-panel>
+</mat-accordion>

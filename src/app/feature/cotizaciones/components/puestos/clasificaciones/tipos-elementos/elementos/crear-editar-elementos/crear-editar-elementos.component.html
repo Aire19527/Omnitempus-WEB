@@ -1,0 +1,191 @@
+<div mat-dialog-title class="container-title-modal">
+  {{ data.element ? "Editar" : "Crear" }}
+  {{ this.data.elementTypeName | lowercase }}
+</div>
+
+<mat-dialog-content class="custom-dialog-content">
+  <form class="mt-2" [formGroup]="elementFormGroup">
+    <div class="row">
+      <div class="col-lg-6 col-md-6 col-sm-12">
+        <mat-form-field class="form-group" appearance="outline" class="matField">
+          <mat-label>{{ this.data.elementTypeName }}</mat-label>
+          <mat-select formControlName="elementProviderId" (selectionChange)="selectElementProviders()"
+            [disableOptionCentering]="true">
+            <mat-option *ngFor="let provider of data.elementProviders" [value]="provider.id">
+              {{ provider.elementName }} - {{ provider.supplierName }} ${{
+              provider.unitPrice | number
+              }}
+            </mat-option>
+          </mat-select>
+          <mat-error class="helper-text error" *ngIf="
+              elementFormGroup.controls['elementProviderId']?.hasError(
+                'required'
+              ) && elementFormGroup.get('elementProviderId')?.touched
+            ">
+            * Este campo es requerido.
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-lg-6 col-md-6 col-sm-12">
+        <mat-form-field class="form-group" appearance="outline" class="matField">
+          <mat-label matLabel class="mb-2">Valor</mat-label>
+          <input matInput formControlName="cost" prefix="$" type="text" mask="separator.2" maxlength="15"
+            thousandSeparator="," decimalMarker="." autocomplete="off" />
+          <mat-error class="helper-text error" *ngIf="
+              elementFormGroup.controls['cost']?.hasError('required') &&
+              elementFormGroup.get('cost')?.touched
+            ">
+            * Este campo es requerido.
+          </mat-error>
+          <mat-error class="helper-text error" *ngIf="
+              elementFormGroup.controls['cost']?.hasError('min') &&
+              elementFormGroup.get('cost')?.touched
+            ">
+            * La valor mínimo es de $1.
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-lg-6 col-md-6 col-sm-12">
+        <mat-form-field class="form-group" appearance="outline" class="matField">
+          <mat-label matLabel class="mb-2">Depreciación</mat-label>
+          <input matInput formControlName="depreciation" maxlength="5" type="text" mask="separator.2"
+            thousandSeparator="," decimalMarker="." autocomplete="off" />
+          <mat-error class="helper-text error" *ngIf="
+              elementFormGroup.controls['depreciation']?.hasError('required') &&
+              elementFormGroup.get('depreciation')?.touched
+            ">
+            * Este campo es requerido.
+          </mat-error>
+          <mat-error class="helper-text error" *ngIf="
+              elementFormGroup.controls['depreciation']?.hasError('min') &&
+              elementFormGroup.get('depreciation')?.touched
+            ">
+            * La depreciación debe ser mayor o igual a 0.
+          </mat-error>
+
+          <mat-error class="helper-text error" *ngIf="
+              elementFormGroup.controls['depreciation']?.hasError('max') &&
+              elementFormGroup.get('depreciation')?.touched
+            ">
+            * La depreciación debe ser menor o igual a 100.
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-lg-6 col-md-6 col-sm-12">
+        <mat-form-field class="form-group" appearance="outline" class="matField">
+          <mat-label matLabel class="mb-2">Cantidad</mat-label>
+          <input matInput formControlName="quantity" type="text" mask="separator.2" maxlength="15" thousandSeparator=","
+            decimalMarker="." autocomplete="off" />
+          <mat-error class="helper-text error" *ngIf="
+              elementFormGroup.controls['quantity']?.hasError('required') &&
+              elementFormGroup.get('quantity')?.touched
+            ">
+            * Este campo es requerido.
+          </mat-error>
+          <mat-error class="helper-text error" *ngIf="
+              elementFormGroup.controls['quantity']?.hasError('min') &&
+              elementFormGroup.get('quantity')?.touched
+            ">
+            * La cantidad debe ser mayor o igual a 0.
+          </mat-error>
+
+          <mat-error class="helper-text error" *ngIf="
+              elementFormGroup.controls['quantity']?.hasError('max') &&
+              elementFormGroup.get('quantity')?.touched
+            ">
+            * La cantidad debe ser menor o igual a 100.
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-lg-6 col-md-6 col-sm-12" *ngIf="data.idElementType == elementClassificationEnum.Armas">
+        <mat-form-field class="form-group" appearance="outline" class="matField">
+          <mat-label class="mb-2">¿El arma tiene cajilla o regresa a OT?</mat-label>
+          <mat-select disableOptionCentering="true" formControlName="box" (selectionChange)="selectBox()"
+            [disableOptionCentering]="true">
+            <mat-option [value]="1">OT</mat-option>
+            <mat-option [value]="2">Cajilla de seguridad</mat-option>
+          </mat-select>
+          <mat-error class="helper-text error" *ngIf="
+              elementFormGroup.controls['box']?.hasError('required') &&
+              elementFormGroup.get('box')?.touched
+            ">
+            * Este campo es requerido.
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-lg-6 col-md-6 col-sm-12" *ngIf="elementFormGroup.get('box')?.value === 1">
+        <mat-form-field class="form-group" appearance="outline" class="matField">
+          <mat-label matLabel class="mb-2">Costo de transporte por día</mat-label>
+          <input matInput formControlName="transportationCostDay" prefix="$" type="text" mask="separator.2"
+            maxlength="15" thousandSeparator="," decimalMarker="." autocomplete="off"/>
+          <mat-error class="helper-text error" *ngIf="
+                elementFormGroup.controls['transportationCostDay']?.hasError(
+                  'required'
+                ) && elementFormGroup.get('transportationCostDay')?.touched
+              ">
+            * Este campo es requerido.
+            </mat-error>
+          <mat-error class="helper-text error" *ngIf="
+                elementFormGroup.controls['transportationCostDay']?.hasError(
+                  'min'
+                ) && elementFormGroup.get('transportationCostDay')?.touched
+              ">
+            * La valor mínimo es de $1.
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-lg-6 col-md-6 col-sm-12" *ngIf="elementFormGroup.get('box')?.value === 1">
+        <mat-form-field class="form-group" appearance="outline" class="matField">
+          <mat-label matLabel class="mb-2">Costo de transporte por mes</mat-label>
+          <input matInput formControlName="transportationCostMonth" prefix="$" type="text" mask="separator.2"
+            maxlength="15" thousandSeparator="," decimalMarker="." autocomplete="off"/>
+          <mat-error class="helper-text error" *ngIf="
+                elementFormGroup.controls['transportationCostMonth']?.hasError(
+                  'required'
+                ) && elementFormGroup.get('transportationCostMonth')?.touched
+              ">
+            * Este campo es requerido.
+            </mat-error>
+          <mat-error class="helper-text error" *ngIf="
+                elementFormGroup.controls['transportationCostMonth']?.hasError(
+                  'min'
+                ) && elementFormGroup.get('transportationCostMonth')?.touched
+              ">
+            * La valor mínimo es de $1.
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-lg-6 col-md-6 col-sm-12" *ngIf="elementFormGroup.get('box')?.value === 2">
+        <mat-form-field class="form-group" appearance="outline" class="matField">
+          <mat-label matLabel class="mb-2">Costo de cajilla por mes
+          </mat-label>
+          <input matInput formControlName="boxCostPerMonth" prefix="$" type="text" mask="separator.2" maxlength="15"
+            thousandSeparator="," decimalMarker="." autocomplete="off"/>
+          <mat-error class="helper-text error" *ngIf="
+                elementFormGroup.controls['boxCostPerMonth']?.hasError(
+                  'required'
+                ) && elementFormGroup.get('boxCostPerMonth')?.touched
+              ">
+            * Este campo es requerido.
+            </mat-error>
+          <mat-error class="helper-text error" *ngIf="
+                elementFormGroup.controls['boxCostPerMonth']?.hasError('min') &&
+                elementFormGroup.get('boxCostPerMonth')?.touched
+              ">
+            * La valor mínimo es de $1.
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions class="d-flex justify-content-end">
+  <button mat-raised-button class="cancelar text-dark" [mat-dialog-close]="false">
+    Cancelar
+  </button>
+  <button mat-raised-button class="guardar text-dark mx-3" (click)="saveUpdateElement()"
+    [disabled]="elementFormGroup.invalid">
+    Guardar
+  </button>
+</mat-dialog-actions>

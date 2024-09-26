@@ -1,0 +1,85 @@
+<mat-accordion multi>
+  <mat-expansion-panel
+    *ngFor="let selected of principalInfoSubChargesQuotations"
+  >
+    <mat-expansion-panel-header>
+      <mat-panel-title class="titleAcordeon">
+        {{ selected.subchargeFormat }}
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <div align="end">
+      <button
+        mat-button
+        color="warn"
+        (click)="elimimnarPuesto(selected.id)"
+        matTooltip="Eliminar puesto"
+        style="font-size: large; font-weight: 800"
+        [disabled]="isStatusDisabled"
+      >
+        <mat-icon matTooltip="Eliminar">delete</mat-icon>
+        <span>Eliminar</span>
+      </button>
+    </div>
+    <mat-accordion class="example-headers-align" multi>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title class="subTitleAcordeon">Turnos </mat-panel-title>
+        </mat-expansion-panel-header>
+        <app-turno [principalInfoSubChargesQuotation]="selected"></app-turno>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title class="subTitleAcordeon"> Salario </mat-panel-title>
+        </mat-expansion-panel-header>
+
+        <app-salario
+          [principalInfoSubChargesQuotation]="selected"
+        ></app-salario>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title class="subTitleAcordeon">
+            Horas extras
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+
+        <app-horas-extras
+          [principalInfoSubChargesQuotation]="selected"
+        ></app-horas-extras>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title class="subTitleAcordeon">
+            Prestaciones sociales legales
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <app-prestaciones-sociales-legales
+          [principalInfoSubChargesQuotation]="selected"
+        ></app-prestaciones-sociales-legales>
+      </mat-expansion-panel>
+
+      <app-tipos-elementos
+        [principalInfoSubChargesQuotation]="selected"
+      ></app-tipos-elementos>
+
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title class="subTitleAcordeon">
+            Bienestar
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <app-bonos-ot
+          [subChargesQuotationId]="selected.id"
+          [listBonosOT]="selected.subChargesQuotation?.bonusOTs!"
+        ></app-bonos-ot>
+      </mat-expansion-panel>
+    </mat-accordion>
+    <app-calcular-costos
+      [principalInfoSubChargesQuotation]="selected"
+    ></app-calcular-costos>
+  </mat-expansion-panel>
+</mat-accordion>

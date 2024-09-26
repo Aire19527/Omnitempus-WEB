@@ -1,0 +1,50 @@
+<div class="row">
+  <div class="">
+    <table mat-table [dataSource]="dataSource" matSort style="width: 100%">
+      <!-- Position Column -->
+      <ng-container matColumnDef="concept">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Concepto</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.concept }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="surcharge">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Recargo</th>
+
+        <td mat-cell *matCellDef="let element">{{ element.surcharge }}%</td>
+      </ng-container>
+
+      <ng-container matColumnDef="numberHours">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          Número de horas
+        </th>
+
+        <td mat-cell *matCellDef="let element">
+          {{ element.numberHours | number }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="value">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Valor</th>
+
+        <td mat-cell *matCellDef="let element">
+          <div *ngIf="element.value == null">$0.00</div>
+          {{ element.value | currency }}
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell no-data-cell" colspan="4">
+          No hay datos para mostrar.
+        </td>
+      </tr>
+    </table>
+    <mat-paginator
+      [pageSizeOptions]="[10, 25, 50, 100]"
+      aria-label="Select page of users"
+    >
+    </mat-paginator>
+  </div>
+</div>

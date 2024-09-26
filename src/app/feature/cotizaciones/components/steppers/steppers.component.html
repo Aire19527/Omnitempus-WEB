@@ -1,0 +1,42 @@
+<div class="container-title-header">
+  <div class="stepper-propuesta" *ngIf="showStepperPropuesta && statusName">
+    <div>
+      <h5 class="titleTable">
+        {{ namRequest }}
+        <ng-container *ngIf="namOffert; else noOffert">{{ ' / ' + namOffert }}</ng-container>
+        <ng-template #noOffert></ng-template>
+      </h5>
+    </div>
+    <button mat-raised-button class="btnSize guardar text-dark" [matMenuTriggerFor]="menu">
+      {{statusName}}
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="statusChange()" 
+      *ngIf="!(statusName === 'Aprobada' || statusName === 'No Aprobada' || statusName === 'Reemplazada' || statusName === 'Anulada')">Cambiar estado</button>
+      <button mat-menu-item (click)="statusHistoric()">Histórico de estados</button>
+    </mat-menu>
+  </div>
+</div>
+<div class="container-fluid container-padding">
+  <mat-stepper [linear]="isLinear" #stepper (selectionChange)="onSelectionChange($event)">
+    <mat-step [stepControl]="areaCostoFormGroup" errorMessage="Los datos son requeridos." >
+      <form [formGroup]="areaCostoFormGroup">
+        <app-area-costos>
+          <ng-template matStepLabel>Información Básica</ng-template>
+        </app-area-costos>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="puestosFormGroup" errorMessage="Los datos son requeridos.">
+      <form [formGroup]="puestosFormGroup">
+      <app-puestos>
+        <ng-template matStepLabel>Puestos</ng-template>
+      </app-puestos>
+    </form>
+    </mat-step>
+    <mat-step [stepControl]="propuestaForm" errorMessage="Los datos son requeridos." [editable]="isEditable">
+      <app-propuesta-economica>
+        <ng-template matStepLabel>Propuesta económica</ng-template>
+      </app-propuesta-economica>
+    </mat-step>
+  </mat-stepper>
+</div>

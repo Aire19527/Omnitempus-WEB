@@ -1,0 +1,17 @@
+.error-message {
+    color: #f44336;
+    font-weight: 500;
+    font-size: 14px;
+    font-family: 'Gotham', 'Novecentowide', sans-serif;
+    display: block;
+    margin-top: -15px;
+}
+
+.error-message-type-element{
+    color: #9d9d9d;
+    font-weight: 600;
+    font-size: 14px;
+    font-family: 'Gotham', 'Novecentowide', sans-serif;
+    display: block;
+    margin-top: -15px;
+}

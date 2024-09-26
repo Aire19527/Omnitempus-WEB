@@ -1,0 +1,15 @@
+<div *ngIf="!isInsertOrEditrRoute">
+  <app-table
+    [displayedColumns]="displayedColumns"
+    [titleColumn]="titleColumn"
+    [url]="url"
+    [urlDelete]="urlDelete"
+    [showButtonCreate]="true"
+    [title]="title"
+    (dataCreate)="dataCreate()"
+    [changeUrl]="changeUrl"
+    (dataEdit)="dataEdit($event)"
+  ></app-table>
+</div>
+
+<router-outlet> </router-outlet>

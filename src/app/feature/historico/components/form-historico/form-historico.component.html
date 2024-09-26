@@ -1,0 +1,16 @@
+<div mat-dialog-title class="container-title-modal">Detalle auditoría</div>
+<mat-dialog-content class="custom-dialog-content">
+  <div class="info my-3">
+    <p [innerHTML]="data.detail | jsonToHtml"></p>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions class="d-flex justify-content-end">
+  <button
+    mat-raised-button
+    class="guardar text-dark mx-2"
+    [mat-dialog-close]="false"
+  >
+    Aceptar
+  </button>
+</mat-dialog-actions>

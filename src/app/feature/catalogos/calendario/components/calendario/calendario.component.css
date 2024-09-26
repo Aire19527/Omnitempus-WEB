@@ -1,0 +1,48 @@
+.day-header-cell {
+    border: 1px solid #ccc;
+    padding: 5px;
+    text-align: center;
+    background-color: white;
+}
+
+.custom-day-cell {
+    border: 1px solid #ccc;
+    padding: 5px;
+    text-align: center;
+
+}
+
+.fc .fc-toolbar-title {
+    font-weight: 700;
+    color: red;
+}
+
+h2 {
+    font-weight: 700;
+    color: red;
+}
+
+.fc-toolbar-chunk {
+    font-weight: 700;
+    color: red;
+}
+
+.container-padding {
+    position: relative;
+}
+
+.delete-icon {
+    position: absolute;
+    top: 0;
+    right: -7px;
+    font-size: 20px;
+    cursor: pointer;
+    color: rgb(125, 125, 125);
+}
+
+
+.organized-comment {
+    white-space: pre-line; 
+    max-width: 100%; 
+  }
+  

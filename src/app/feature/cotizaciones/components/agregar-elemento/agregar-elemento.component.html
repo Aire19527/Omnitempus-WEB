@@ -1,0 +1,304 @@
+<div mat-dialog-title class="container-title-modal">
+  {{ action | titlecase }} elemento
+</div>
+
+<mat-dialog-content class="custom-dialog-content">
+  <form class="mt-2" [formGroup]="addElementoFormGroup">
+    <div class="row">
+      <div class="col-lg-6 col-md-6 col-sm-12">
+        <mat-form-field
+          class="form-group"
+          appearance="outline"
+          class="matField"
+        >
+          <mat-label matLabel class="mb-2">Clasificación de elemento</mat-label>
+          <mat-select
+            name="elementTypeId"
+            (selectionChange)="getElement()"
+            formControlName="elementTypeId"
+            [disableOptionCentering]="true"
+            required
+          >
+            <mat-option> Seleccione una opción </mat-option>
+            <mat-option
+              *ngFor="let elementType of elementTypeList"
+              [value]="elementType.id"
+            >
+              {{ elementType.name }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="elementTypeId?.errors">
+            Este campo es obligatorio.
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-lg-6 col-md-6 col-sm-12">
+        <mat-form-field
+          class="form-group"
+          appearance="outline"
+          class="matField"
+        >
+          <mat-label class="mb-2">Elemento</mat-label>
+          <mat-select
+            name="elementId"
+            formControlName="elementId"
+            [disableOptionCentering]="true"
+            required
+            [disabled]="
+              addElementoFormGroup.get('elementTypeId')?.hasError('required')
+                ? true
+                : false
+            "
+          >
+            <mat-option
+              *ngFor="let element of elementList"
+              [value]="element.elementId"
+              (click)="onElementSelectionChange(element)"
+            >
+              {{ element.elementName }} - {{ element.supplierName }} -
+              {{ "$" + formatUnitPrice(element.unitPrice) }}
+            </mat-option>
+            <mat-option *ngIf="elementList.length <= 0">
+              No hay elementos para la mostrar.
+            </mat-option>
+          </mat-select>
+
+          <mat-error *ngIf="addElementoFormGroup.get('elementId')?.errors">
+            Este campo es obligatorio.
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-lg-6 col-md-6 col-sm-12" *ngIf="esAdmin">
+        <mat-form-field
+          class="form-group"
+          appearance="outline"
+          class="matField"
+        >
+          <mat-label>Valor</mat-label>
+          <input
+            matInput
+            class="large-input"
+            formControlName="value"
+            type="text"
+            min="1"
+            max="100000000"
+            maxlength="12"
+            prefix="$"
+            mask="separator.2"
+            thousandSeparator=","
+            decimalMarker="."
+            autocomplete="off"
+            required
+          />
+          <mat-error
+            *ngIf="addElementoFormGroup.get('value')?.hasError('required')"
+          >
+            Este campo es obligatorio.
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-lg-6 col-md-6 col-sm-12" *ngIf="esAdmin">
+        <mat-form-field
+          class="form-group"
+          appearance="outline"
+          class="matField"
+        >
+          <mat-label>Depreciación</mat-label>
+          <input
+            matInput
+            class="large-input"
+            formControlName="depreciation"
+            type="text"
+            maxlength="3"
+            required
+            autocomplete="off"
+          />
+          <mat-error
+            *ngIf="
+              addElementoFormGroup.get('depreciation')?.hasError('required')
+            "
+          >
+            Este campo es obligatorio.
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div
+        class="col-lg-6 col-md-6 col-sm-12"
+        *ngIf="addElementoFormGroup.get('elementTypeId')?.value > 0"
+      >
+        <mat-form-field
+          class="form-group"
+          appearance="outline"
+          class="matField"
+        >
+          <mat-label>Cantidad</mat-label>
+          <input
+            matInput
+            class="large-input"
+            formControlName="amount"
+            type="number"
+            required
+            autocomplete="off"
+          />
+          <mat-error *ngIf="amount?.errors">
+            Este campo es obligatorio.
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div
+        class="col-lg-6 col-md-6 col-sm-12"
+        *ngIf="addElementoFormGroup.get('elementTypeId')?.value === 1"
+      >
+        <mat-form-field
+          class="form-group"
+          appearance="outline"
+          class="matField"
+        >
+          <mat-label class="mb-2"
+            >¿El arma tiene cajilla o regresa a OT?</mat-label
+          >
+          <mat-select
+            name="box"
+            formControlName="box"
+            [disableOptionCentering]="true"
+            required
+          >
+            <mat-option [value]="0">OT</mat-option>
+            <mat-option [value]="1">cajilla de seguridad</mat-option>
+          </mat-select>
+          <mat-error *ngIf="box?.errors">
+            Este campo es obligatorio.
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div
+        class="col-lg-6 col-md-6 col-sm-12"
+        *ngIf="
+          addElementoFormGroup.get('elementTypeId')?.value === 1 &&
+          addElementoFormGroup.get('box')?.value === 1
+        "
+      >
+        <mat-form-field
+          class="form-group"
+          appearance="outline"
+          class="matField"
+        >
+          <mat-label>Costo de cajilla por mes</mat-label>
+          <input
+            matInput
+            class="large-input"
+            formControlName="boxCostMonth"
+            type="text"
+            min="1"
+            max="100000000"
+            maxlength="12"
+            prefix="$"
+            mask="separator.2"
+            thousandSeparator=","
+            decimalMarker="."
+            autocomplete="off"
+          />
+          <mat-error
+            *ngIf="
+              addElementoFormGroup.get('boxCostMonth')?.hasError('required')
+            "
+          >
+            Este campo es obligatorio.
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div
+        class="col-lg-6 col-md-6 col-sm-12"
+        *ngIf="
+          addElementoFormGroup.get('elementTypeId')?.value === 1 &&
+          addElementoFormGroup.get('box')?.value === 0
+        "
+      >
+        <mat-form-field
+          class="form-group"
+          appearance="outline"
+          class="matField"
+        >
+          <mat-label>Costo de transporte por día</mat-label>
+          <input
+            matInput
+            class="large-input"
+            formControlName="transportCostDay"
+            type="text"
+            min="1"
+            max="100000000"
+            maxlength="12"
+            prefix="$"
+            mask="separator.2"
+            thousandSeparator=","
+            decimalMarker="."
+            autocomplete="off"
+          />
+          <mat-error
+            *ngIf="
+              addElementoFormGroup.get('transportCostDay')?.hasError('required')
+            "
+          >
+            Este campo es obligatorio.
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div
+        class="col-lg-6 col-md-6 col-sm-12"
+        *ngIf="
+          addElementoFormGroup.get('elementTypeId')?.value === 1 &&
+          addElementoFormGroup.get('box')?.value === 0
+        "
+      >
+        <mat-form-field
+          class="form-group"
+          appearance="outline"
+          class="matField"
+        >
+          <mat-label>Costo de transporte por mes</mat-label>
+          <input
+            matInput
+            class="large-input"
+            formControlName="transportCostMonth"
+            type="text"
+            min="1"
+            max="100000000"
+            maxlength="12"
+            prefix="$"
+            mask="separator.2"
+            thousandSeparator=","
+            decimalMarker="."
+            autocomplete="off"
+          />
+          <mat-error
+            *ngIf="
+              addElementoFormGroup
+                .get('transportCostMonth')
+                ?.hasError('required')
+            "
+          >
+            Este campo es obligatorio.
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions class="d-flex justify-content-end">
+  <button
+    mat-raised-button
+    class="btnSize cancelar text-dark"
+    [mat-dialog-close]="false"
+  >
+    Cancelar
+  </button>
+  <button
+    mat-raised-button
+    class="btnSize guardar text-dark mx-3"
+    (click)="saveUpdateElementQuotation()"
+    [disabled]="addElementoFormGroup.invalid"
+  >
+    {{ titleButton }}
+  </button>
+</mat-dialog-actions>

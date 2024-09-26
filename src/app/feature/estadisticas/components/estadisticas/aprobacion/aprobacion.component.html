@@ -1,0 +1,10 @@
+<ngx-gauge [value]="percentageApproved" [thresholds]="thresholdConfig" [thick]="10">
+    <ngx-gauge-append>
+        <div class="my-5">
+            <h5 class="approval mt-3">Aprobación</h5>
+        </div>
+    </ngx-gauge-append>
+    <ngx-gauge-value>
+        {{percentageApproved}}%
+    </ngx-gauge-value>
+</ngx-gauge>

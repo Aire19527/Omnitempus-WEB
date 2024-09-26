@@ -1,0 +1,70 @@
+<div class="container-fluid">
+    <div class="row container-title-header">
+        <div class="col-md-8" align="start">
+            <h5 class="title">Reportes</h5>
+        </div>
+
+        <div class="col-md-4" align="end">
+            <div class="input-group mx-3">
+                <span class="input-group-text"><i class="fa fa-search"></i></span>
+                <input type="text" placeholder="Buscar" class="form-control" (keyup)="applyFilter($event)" #input
+                    style="margin-right: 10px" autocomplete="off" />
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid container-padding">
+        <div class="row">
+            <div class="design col-md-12 mat-elevation-z8">
+                <table mat-table [dataSource]="dataSource" matSort style="width: 100%">
+                    <ng-container matColumnDef="name">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                            Nombre
+                        </th>
+                        <td mat-cell *matCellDef="let row">
+                            {{row.name}}
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="acciones">
+                        <th mat-header-cell *matHeaderCellDef style="text-align: end"> Acciones </th>
+                        <td mat-cell *matCellDef="let row" style="text-align: end">
+                            <button mat-icon-button [matMenuTriggerFor]="menu">
+                                <mat-icon>more_vert</mat-icon>
+                            </button>
+                            <mat-menu #menu="matMenu" yPosition="below">
+                                <ng-container *ngIf="row.name === 'Salarios de cotizaciones activas'">
+                                    <button mat-menu-item (click)="showSalaryQuotation()">
+                                        <mat-icon>get_app</mat-icon>
+                                        <span> Generar </span>
+                                    </button>
+                                </ng-container>
+                                <ng-container *ngIf="row.name === 'Elementos de cotizaciones activas'">
+                                    <button mat-menu-item (click)="showElementQuotation()">
+                                        <mat-icon>get_app</mat-icon>
+                                        <span> Generar </span>
+                                    </button>
+                                </ng-container>
+                                <ng-container *ngIf="row.name === 'Trazabilidad de las cotizaciones'">
+                                    <button mat-menu-item (click)="showTraceabilityQuotation()">
+                                        <mat-icon>get_app</mat-icon>
+                                        <span> Generar </span>
+                                    </button>
+                                </ng-container>
+                                <ng-container *ngIf="row.name === 'Proveedores'">
+                                    <button mat-menu-item (click)="showProvider()">
+                                        <mat-icon>get_app</mat-icon>
+                                        <span> Generar </span>
+                                    </button>
+                                </ng-container>
+                            </mat-menu>
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+                </table>
+                <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]" aria-label="Select page of users">
+                </mat-paginator>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,298 @@
+<div class="container-title-header"></div>
+<div class="container-fluid container-padding">
+  <div class="formulario">
+    <form class="down" [formGroup]="salaryTypeForm">
+      <div class="row">
+        <div class="col-lg-6 col-md-6 col-sm-12">
+          <mat-form-field
+            class="form-group"
+            appearance="outline"
+            class="matField"
+          >
+            <mat-label class="mb-2">Tipos de salario</mat-label>
+            <mat-select
+              name="name"
+              formControlName="name"
+              [disableOptionCentering]="true"
+              required
+              #mySelect
+            >
+              <mat-option
+                *ngFor="let salaryType of salaryTypeList"
+                [value]="salaryType.value"
+              >
+                {{ salaryType.name }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="salaryTypeForm.get('name')?.errors">
+              Este campo es obligatorio.
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-12">
+          <mat-form-field
+            class="form-group"
+            appearance="outline"
+            class="matField"
+          >
+            <mat-label class="mb-2">¿Se líquida cesantías?</mat-label>
+            <mat-select
+              name="hasSeverancePay"
+              formControlName="hasSeverancePay"
+              [disableOptionCentering]="true"
+              required
+            >
+              <mat-option [value]="true"> Si </mat-option>
+              <mat-option [value]="false"> No </mat-option>
+            </mat-select>
+            <mat-error *ngIf="salaryTypeForm.get('hasSeverancePay')?.errors">
+              Este campo es obligatorio.
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-12">
+          <mat-form-field
+            class="form-group"
+            appearance="outline"
+            class="matField"
+          >
+            <mat-label class="mb-2"
+              >¿Se líquida intereses de cesantías?</mat-label
+            >
+            <mat-select
+              name="hasSeveranceInterest"
+              formControlName="hasSeveranceInterest"
+              [disableOptionCentering]="true"
+              required
+            >
+              <mat-option [value]="true"> Si </mat-option>
+              <mat-option [value]="false"> No </mat-option>
+            </mat-select>
+            <mat-error
+              *ngIf="salaryTypeForm.get('hasSeveranceInterest')?.errors"
+            >
+              Este campo es obligatorio.
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-12">
+          <mat-form-field appearance="outline" class="matField">
+            <mat-label>¿Se líquida subsidio legal de transporte?</mat-label>
+            <mat-select
+              formControlName="hasLegalTransportSubsidy"
+              [disableOptionCentering]="true"
+            >
+              <mat-option [value]="true"> Si </mat-option>
+              <mat-option [value]="false"> No </mat-option>
+            </mat-select>
+            <mat-error
+              *ngIf="salaryTypeForm.get('hasLegalTransportSubsidy')?.errors"
+            >
+              Este campo es obligatorio.
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-12">
+          <mat-form-field
+            class="form-group"
+            appearance="outline"
+            class="matField"
+          >
+            <mat-label class="mb-2">¿Se líquida prima?</mat-label>
+            <mat-select
+              name="hasBonus"
+              formControlName="hasBonus"
+              [disableOptionCentering]="true"
+              required
+            >
+              <mat-option [value]="true"> Si </mat-option>
+              <mat-option [value]="false"> No </mat-option>
+            </mat-select>
+            <mat-error *ngIf="salaryTypeForm.get('hasBonus')?.errors">
+              Este campo es obligatorio.
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-12">
+          <mat-form-field
+            class="form-group"
+            appearance="outline"
+            class="matField"
+          >
+            <mat-label class="mb-2">¿Se líquida vacaciones?</mat-label>
+            <mat-select
+              name="hasVacation"
+              formControlName="hasVacation"
+              [disableOptionCentering]="true"
+              required
+            >
+              <mat-option [value]="true"> Si </mat-option>
+              <mat-option [value]="false"> No </mat-option>
+            </mat-select>
+            <mat-error *ngIf="salaryTypeForm.get('hasVacation')?.errors">
+              Este campo es obligatorio.
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-12">
+          <mat-form-field
+            class="form-group"
+            appearance="outline"
+            class="matField"
+          >
+            <mat-label class="mb-2">¿Se líquida salud?</mat-label>
+            <mat-select
+              name="hasEps"
+              formControlName="hasEps"
+              [disableOptionCentering]="true"
+              required
+            >
+              <mat-option [value]="true"> Si </mat-option>
+              <mat-option [value]="false"> No </mat-option>
+            </mat-select>
+            <mat-error *ngIf="salaryTypeForm.get('hasEps')?.errors">
+              Este campo es obligatorio.
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-12">
+          <mat-form-field
+            class="form-group"
+            appearance="outline"
+            class="matField"
+          >
+            <mat-label class="mb-2">¿Se líquida ARL?</mat-label>
+            <mat-select
+              name="hasArl"
+              formControlName="hasArl"
+              [disableOptionCentering]="true"
+              required
+            >
+              <mat-option [value]="true"> Si </mat-option>
+              <mat-option [value]="false"> No </mat-option>
+            </mat-select>
+            <mat-error *ngIf="salaryTypeForm.get('hasArl')?.errors">
+              Este campo es obligatorio.
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-12">
+          <mat-form-field
+            class="form-group"
+            appearance="outline"
+            class="matField"
+          >
+            <mat-label class="mb-2">¿Se líquida pensión?</mat-label>
+            <mat-select
+              name="hasRetirement"
+              formControlName="hasRetirement"
+              [disableOptionCentering]="true"
+              required
+            >
+              <mat-option [value]="true"> Si </mat-option>
+              <mat-option [value]="false"> No </mat-option>
+            </mat-select>
+            <mat-error *ngIf="salaryTypeForm.get('hasRetirement')?.errors">
+              Este campo es obligatorio.
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-12">
+          <mat-form-field
+            class="form-group"
+            appearance="outline"
+            class="matField"
+          >
+            <mat-label class="mb-2">¿Se líquida ICBF?</mat-label>
+            <mat-select
+              name="hasICBF"
+              formControlName="hasICBF"
+              [disableOptionCentering]="true"
+              required
+            >
+              <mat-option [value]="true"> Si </mat-option>
+              <mat-option [value]="false"> No </mat-option>
+            </mat-select>
+            <mat-error *ngIf="salaryTypeForm.get('hasICBF')?.errors">
+              Este campo es obligatorio.
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-12">
+          <mat-form-field
+            class="form-group"
+            appearance="outline"
+            class="matField"
+          >
+            <mat-label class="mb-2">¿Se líquida SENA?</mat-label>
+            <mat-select
+              name="hasSena"
+              formControlName="hasSena"
+              [disableOptionCentering]="true"
+              required
+            >
+              <mat-option [value]="true"> Si </mat-option>
+              <mat-option [value]="false"> No </mat-option>
+            </mat-select>
+            <mat-error *ngIf="salaryTypeForm.get('hasSena')?.errors">
+              Este campo es obligatorio.
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-12">
+          <mat-form-field appearance="outline" class="matField">
+            <mat-label>¿Se líquida caja de compensación?</mat-label>
+            <mat-select
+              formControlName="hasCompensationBox"
+              [disableOptionCentering]="true"
+            >
+              <mat-option [value]="true"> Si </mat-option>
+              <mat-option [value]="false"> No </mat-option>
+            </mat-select>
+            <mat-error *ngIf="salaryTypeForm.get('hasCompensationBox')?.errors">
+              Este campo es obligatorio.
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-12">
+          <mat-form-field
+            class="form-group"
+            appearance="outline"
+            class="matField"
+          >
+            <mat-label class="mb-2">¿Se líquida extras?</mat-label>
+            <mat-select
+              name="hasExtraHours"
+              formControlName="hasExtraHours"
+              [disableOptionCentering]="true"
+              required
+            >
+              <mat-option [value]="true"> Si </mat-option>
+              <mat-option [value]="false"> No </mat-option>
+            </mat-select>
+            <mat-error *ngIf="salaryTypeForm.get('hasExtraHours')?.errors">
+              Este campo es obligatorio.
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="d-flex justify-content-end">
+        <button
+          mat-raised-button
+          class="btnSize cancelar text-dark mx-3"
+          (click)="goBack()"
+        >
+          Cancelar
+        </button>
+        <button
+          mat-raised-button
+          class="btnSize guardar text-dark"
+          (click)="saveUpdateSalaryType()"
+          [disabled]="salaryTypeForm.invalid"
+        >
+          {{ titleButton }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

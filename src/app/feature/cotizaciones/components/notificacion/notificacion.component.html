@@ -1,0 +1,79 @@
+<div mat-dialog-title class="container-title-modal">Notificar</div>
+
+<mat-dialog-content class="custom-dialog-content">
+  <form class="mt-3" [formGroup]="notificacionForm">
+    <div class="row">
+      <div class="col-lg-12 col-md-12 col-sm-12">
+        <mat-form-field
+          class="form-group"
+          appearance="outline"
+          class="matField"
+        >
+          <mat-label class="mb-2">Área a notificar</mat-label>
+          <mat-select
+            multiple
+            formControlName="idNotificacion"
+            (selectionChange)="notificacionSeleccionada()"
+          >
+            <mat-option
+              *ngFor="let item of data.Notificaciones"
+              [value]="item.id"
+            >
+              {{ item.notificationType }} - {{ item.nameArea }}
+            </mat-option>
+          </mat-select>
+          <mat-error
+            class="helper-text error"
+            *ngIf="notificacionForm.get('idNotificacion')?.errors"
+          >
+            * Este campo es requerido.
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="mat-elevation-z8" *ngIf="mostrarEmails">
+          <table mat-table [dataSource]="dataSource" matSort>
+            <ng-container matColumnDef="email">
+              <th mat-header-cell *matHeaderCellDef>Correo</th>
+              <td mat-cell *matCellDef="let row">
+                {{ row }}
+              </td>
+            </ng-container>
+
+            <tr
+              mat-header-row
+              *matHeaderRowDef="displayedColumns; sticky: true"
+            ></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+            <tr class="mat-row" *matNoDataRow>
+              <td class="mat-cell no-data-cell" colspan="4">
+                No hay datos para mostrar.
+              </td>
+            </tr>
+          </table>
+
+          <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]"></mat-paginator>
+        </div>
+      </div>
+    </div>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions class="d-flex justify-content-end">
+  <button
+    mat-raised-button
+    class="cancelar text-dark mx-2"
+    [mat-dialog-close]="false"
+  >
+    Cancelar
+  </button>
+  <button
+    mat-raised-button
+    class="guardar text-dark"
+    (click)="enviarNotificacion()"
+    [disabled]="!mostrarEmails"
+  >
+    Enviar
+  </button>
+</mat-dialog-actions>

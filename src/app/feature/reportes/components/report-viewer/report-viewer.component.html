@@ -1,0 +1,91 @@
+<div class="row container-title-header">
+  <div class="btn-toolbar justify-content-center" role="toolbar">
+    <div class="btn-group mr-2" role="group">
+      <button type="button" class="btn btnOptions" (click)="zoomOut()">
+        <i class="fa fa-search-minus"></i>
+      </button>
+      <button type="button" class="btn btnOptions" (click)="zoomIn()">
+        <i class="fa fa-search-plus"></i>
+      </button>
+    </div>
+    <div class="btn-group mr-2" role="group">
+      <div class="input-group">
+        <button
+          type="button"
+          class="btn btnOptions btn-sm"
+          (click)="previousPage()"
+        >
+          &lt;
+        </button>
+        <div class="input-group-text" id="btnGroupAddon">Página</div>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Input group example"
+          aria-label="Input group example"
+          aria-describedby="btnGroupAddon"
+          [(ngModel)]="pdfConfig.page"
+        />
+        <div class="input-group-text" id="btnGroupAddon">
+          de {{ pdfConfig.totalPages }}
+        </div>
+        <button
+          type="button"
+          class="btn btnOptions btn-sm"
+          (click)="nextPage()"
+        >
+          &gt;
+        </button>
+      </div>
+    </div>
+    <div class="btn-group mr-2" role="group">
+      <button type="button" class="btn btnOptions" (click)="rotateLeft()">
+        ⟲
+      </button>
+      <button type="button" class="btn btnOptions" (click)="rotateRight()">
+        ⟳
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="loadPdf" *ngIf="!loadPdf">{{ error }}</div>
+
+<div
+  *ngIf="loadPdf"
+  class="floating-button"
+  (mouseenter)="openSubButtons()"
+  (mouseleave)="closeSubButtons()"
+>
+  <button mat-mini-fab color="primary" class="mainButton">
+    <mat-icon>file_download</mat-icon>
+  </button>
+  <div class="sub-buttons" [ngClass]="{ open: showSubButtons }">
+    <button mat-mini-fab color="primary" (click)="downloadPDF()">
+      <mat-icon>picture_as_pdf</mat-icon>
+    </button>
+    <button mat-mini-fab color="primary" (click)="downloadWord()">
+      <mat-icon>description</mat-icon>
+    </button>
+    <button mat-mini-fab color="primary" (click)="downloadExcel()">
+      <mat-icon>lists</mat-icon>
+    </button>
+  </div>
+</div>
+
+<div class="row h-100">
+  <pdf-viewer
+    [class.hide]="!loadPdf"
+    [src]="documentUrl"
+    [original-size]="false"
+    [zoom]="pdfConfig.pdfZoom"
+    [zoom-scale]="pdfConfig.zoomScale"
+    class="h-100"
+    [autoresize]="true"
+    [rotation]="pdfConfig.rotation"
+    (after-load-complete)="loadPdf = true"
+    style="background: #efefef"
+    [(page)]="pdfConfig.page"
+    (pages-initialized)="pageInitialized($event)"
+  ></pdf-viewer>
+</div>

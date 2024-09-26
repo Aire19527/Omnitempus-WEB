@@ -1,0 +1,8 @@
+.error-message {
+    color: #f44336;
+    font-weight: 500;
+    font-size: 14px;
+    font-family: 'Gotham', 'Novecentowide', sans-serif;
+    display: block;
+    margin-top: -15px;
+}

@@ -1,0 +1,42 @@
+
+
+
+ .item-menu {
+  border: solid 2px #69696969;
+  border-radius: 5px;
+  margin-bottom: 2px;
+}
+
+
+  .item-content {
+    display: flex;
+    align-items: center;
+  }
+  
+  /* Estilos para el checkbox */
+  .mat-checkbox {
+    margin-right: 8px; /* Espacio entre el checkbox y el icono */
+  }
+  
+  /* Estilos para el icono */
+  .mat-icon {
+    margin-right: 8px; /* Espacio entre el icono y el nombre */
+    color: var(--blue-color) !important;
+  }
+  .title {
+    color: var(--blue-color) !important;
+    font-size: medium;
+    font-family: sans-serif;
+    font-weight: 550;
+    padding-top: 5px;
+}
+
+.subTitle{
+    
+  color: #09131a!important;
+  font-weight: 500;
+  font-size: medium;
+  font-family: sans-serif;
+  
+}
+

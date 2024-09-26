@@ -1,0 +1,30 @@
+.lista-horizontal {
+    list-style-type: none;
+    display: inline-flex;
+    padding: 0;
+}
+
+li button {
+    border-radius: 100%;
+    width: 90%;
+    height: 35px;
+    border: none;
+}
+
+.diaH {
+    margin-right: 11px;
+}
+
+.diaNH {
+    margin-right: 11px;
+}
+
+.btn-dH {
+    background: #f4a423;
+    border-color: #f4a423;
+}
+
+.btn-dNH {
+    background: #b4b4b4;
+    border-color: #b4b4b4;
+}

@@ -1,0 +1,60 @@
+<div mat-dialog-title class="container-title-modal">
+  {{ action | titlecase }} horario
+</div>
+
+<mat-dialog-content class="custom-dialog-content">
+  <form class="down mt-3" [formGroup]="shiftDetailsFormGroup">
+    <div class="row">
+      <div class="col-lg-12 col-md-12 col-sm-12 my-2">
+        <mat-label matLabel class="mb-2">Días de la semana*</mat-label>
+        <br>
+        <ul class="lista-horizontal my-2">
+          <li class="diaH col-lg-2 col-md-2"><button [ngClass]="isActiveMonday ? 'btn-dH' : 'btn-dNH'"
+              (click)="addDays('Lunes')"> L </button></li>
+          <li class="diaH col-lg-2 col-md-2"><button [ngClass]="isActiveTuesday ? 'btn-dH' : 'btn-dNH'"
+              (click)="addDays('Martes')"> M </button></li>
+          <li class="diaH col-lg-2 col-md-2"><button [ngClass]="isActiveWednesday ? 'btn-dH' : 'btn-dNH'"
+              (click)="addDays('Miércoles')"> M </button></li>
+          <li class="diaH col-lg-2 col-md-2"><button [ngClass]="isActiveThursday ? 'btn-dH' : 'btn-dNH'"
+              (click)="addDays('Jueves')"> J </button></li>
+          <li class="diaH col-lg-2 col-md-2"><button [ngClass]="isActiveFriday ? 'btn-dH' : 'btn-dNH'"
+              (click)="addDays('Viernes')"> V </button></li>
+          <li class="diaNH col-lg-2 col-md-2"><button [ngClass]="isActiveSaturday ? 'btn-dH' : 'btn-dNH'"
+              (click)="addDays('Sábado')"> S </button></li>
+          <li class="diaNH col-lg-2 col-md-2"><button [ngClass]="isActiveSunday ? 'btn-dH' : 'btn-dNH'"
+              (click)="addDays('Domingo')"> D </button></li>
+        </ul>
+        <mat-error *ngIf="shiftDetailsFormGroup.get('day')?.hasError('existingshiftDetails')">
+          {{ shiftDetailsFormGroup.get('day')?.getError('message') }}
+        </mat-error>
+      </div>
+      <br>
+      <div class="col-lg- col-md-6 col-sm-12 my-3">
+        <mat-form-field class="form-group" appearance="outline" class="matField">
+          <mat-label matLabel class="mb-2">Hora inicio</mat-label>
+          <input matInput formControlName="startHour" mask="Hh:m0" placeholder="hh:mm" autocomplete="off">
+          <mat-error *ngIf="shiftDetailsFormGroup.get('startHour')?.errors">
+            Este campo es obligatorio.
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-lg-6 col-md-6 col-sm-12 my-3">
+        <mat-form-field class="form-group" appearance="outline" class="matField">
+          <mat-label matLabel class="mb-2">Hora finalización</mat-label>
+          <input matInput formControlName="endHour" mask="Hh:m0" placeholder="hh:mm" autocomplete="off">
+          <mat-error *ngIf="shiftDetailsFormGroup.get('endHour')?.errors?.['required']">
+            Este campo es obligatorio.
+          </mat-error>
+          <mat-error *ngIf="endHour?.errors?.['endTimeInvalid']">
+            La hora de finalización no puede ser menor o igual a la hora de inicio.
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions class="d-flex justify-content-end">
+  <button mat-raised-button class="btnSize cancelar text-dark" (click)="close(false)">Cancelar</button>
+  <button mat-raised-button class="btnSize guardar text-dark mx-3" (click)="saveUpdateHours()" [disabled]="shiftDetailsFormGroup.invalid">{{titleButton}}</button>
+</mat-dialog-actions>

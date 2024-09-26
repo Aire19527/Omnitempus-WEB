@@ -1,0 +1,40 @@
+table {
+    width: 100%;
+}
+
+
+.tableDecoration th,
+.tableDecoration td {
+    border: 1px solid #919191;
+    padding: 2px;
+    text-align: center;
+    color: black;
+    font-weight: bold;
+}
+
+.tableDecoration {
+    table-layout: fixed;
+    width: 100%;
+}
+
+.titleRow {
+    text-align: left !important;
+    padding-left: 8px;
+    font-weight: bold;
+}
+
+.hourHeader {
+    white-space: nowrap;
+    text-align: center;
+}
+
+.hourCell div {
+    text-align: center;
+    line-height: 30px;
+}
+
+.titleTable {
+    font-family: 'Gotham';
+    font-weight: 700;
+    color: black;
+}

@@ -1,0 +1,23 @@
+
+  <ng-container *ngFor="let person of schedulePerson">
+    <h5 class="titleTable my-3">{{ person.person }}</h5>
+    <table border="1" class="tableDecoration">
+      <thead>
+        <tr>
+          <th style="width: 100px; text-align: left;"></th>
+          <th *ngFor="let hour of hours" class="hourHeader">{{ hour }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let day of days">
+          <td class="titleRow">{{ day }}</td>
+          <td *ngFor="let hour of hours" class="hourCell" style="width: 50px;">
+            <div *ngIf="schedule[person.person][day] && schedule[person.person][day][hour]"
+              [ngStyle]="{ 'background-color': getColor(schedule[person.person][day][hour]) }">
+              {{ schedule[person.person][day][hour] }}
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </ng-container>

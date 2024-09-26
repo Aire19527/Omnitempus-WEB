@@ -1,0 +1,28 @@
+.mat-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+
+.disegnTable {
+  font-size: 16px;
+  font-weight: 800;
+  color: black;
+  background-color: #e6e6e6 !important;
+}
+
+.disegnRows {
+  font-size: 14px;
+  font-weight: 600;
+  color: black;
+  text-decoration: none;
+}
+
+.design {
+  padding: 0;
+}
+
+.no-data-cell {
+  width: 100%;
+  padding: 15px;
+}

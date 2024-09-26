@@ -1,0 +1,23 @@
+<div mat-dialog-title class="container-title-modal">Esquema</div>
+
+<mat-dialog-content class="custom-dialog-content my-3">
+  <div *ngFor="let esquema of data.esquemas">
+    <div class="row">
+      <div class="col-md-12 col-lg-12">
+        <app-table-horario-persona
+          [schedulePerson]="[esquema]"
+        ></app-table-horario-persona>
+      </div>
+    </div>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions class="d-flex justify-content-end">
+  <button
+    mat-raised-button
+    class="button-primary text-dark mx-3"
+    [mat-dialog-close]="false"
+  >
+    Aceptar
+  </button>
+</mat-dialog-actions>

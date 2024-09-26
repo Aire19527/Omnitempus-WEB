@@ -1,0 +1,142 @@
+<div *ngIf="!isInsertOrEditrRoute">
+  <div class="container-fluid">
+    <div class="row container-title-header">
+      <div class="col-md-8" align="start">
+        <h5 class="title">Cotizaciones</h5>
+      </div>
+      <div class="col-md-4" align="end">
+        <div class="input-group mx-2">
+          <span class="input-group-text"><i class="fa fa-search"></i></span>
+          <input
+            type="text"
+            placeholder="Buscar"
+            class="form-control"
+            (keyup)="applyFilter($event)"
+            #input
+            style="margin-right: 10px"
+            autocomplete="off"
+          />
+          <div class="input-group-prepend">
+            <button
+              mat-raised-button
+              class="button-primary text-dark"
+              (click)="dataCreate()"
+            >
+              Crear
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid container-padding">
+      <div class="row">
+        <div class="design col-md-12 mat-elevation-z8">
+          <table
+            mat-table
+            [dataSource]="dataSource"
+            matSort
+            style="width: 100%"
+          >
+            <!-- Position Column -->
+            <ng-container matColumnDef="requestNumber">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                Código solicitud
+              </th>
+              <td mat-cell *matCellDef="let element">
+                {{ element.requestNumber }}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="offerCode">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                Código oferta
+              </th>
+              <td mat-cell *matCellDef="let element">
+                {{ element.offerCode }}
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="customersName">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                Cliente o prospecto
+              </th>
+              <td mat-cell *matCellDef="let element">
+                {{ element.customersName }}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="bussinesLineName">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                Línea de negocio
+              </th>
+              <td mat-cell *matCellDef="let element">
+                {{ element.bussinesLineName }}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="statusName">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Estado</th>
+              <td mat-cell *matCellDef="let element">
+                {{ element.statusName }}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="acciones">
+              <th mat-header-cell *matHeaderCellDef style="text-align: end">
+                Acciones
+              </th>
+              <td mat-cell *matCellDef="let element" style="text-align: end">
+                <button
+                  mat-icon-button
+                  [matMenuTriggerFor]="menu"
+                  aria-label="Example icon-button with a menu"
+                >
+                  <mat-icon>more_vert</mat-icon>
+                </button>
+                <mat-menu #menu="matMenu">
+                  <ng-container>
+                    <button mat-menu-item (click)="dataEdit(element)">
+                      <mat-icon>edit</mat-icon>
+                      <span>Editar</span>
+                    </button>
+                  </ng-container>
+                  <ng-container
+                    *ngIf="showDeleteButtonForQuotation(element.statusName)"
+                  >
+                    <button mat-menu-item (click)="deleteData(element)">
+                      <mat-icon>delete</mat-icon>
+                      <span>Eliminar</span>
+                    </button>
+                  </ng-container>
+                  <ng-container
+                    *ngIf="showNotificacionQuotation(element.statusName)"
+                  >
+                    <button mat-menu-item (click)="notificationData(element)">
+                      <mat-icon>notifications</mat-icon>
+                      <span>Notificación</span>
+                    </button>
+                  </ng-container>
+                </mat-menu>
+              </td>
+            </ng-container>
+
+            <tr
+              mat-header-row
+              *matHeaderRowDef="displayedColumns; sticky: true"
+            ></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+          </table>
+          <mat-paginator
+            [pageSizeOptions]="[10, 25, 50, 100]"
+            aria-label="Select page of users"
+          >
+          </mat-paginator>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="isInsertOrEditrRoute">
+  <router-outlet> </router-outlet>
+</div>

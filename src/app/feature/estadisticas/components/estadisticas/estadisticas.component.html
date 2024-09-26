@@ -1,0 +1,152 @@
+<div class="container-fluid">
+    <div class="row container-title-header">
+        <div class="col-md-8" align="start">
+            <h5 class="title">Estadísticas</h5>
+        </div>
+    </div>
+    <div class="container-fluid container-paddin my-2">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <mat-dialog-content class="custom-dialog-content">
+                    <form class="mt-2" [formGroup]="datesFormGroup">
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <mat-card class="color-border">
+                                    <div class="row mx-3">
+                                        <div class="col-lg-6 col-md-6 col-sm-12 my-3">
+                                            <mat-form-field class="form-group" appearance="outline" class="matField">
+                                                <mat-label class="mb-2">Fecha inicio</mat-label>
+                                                <input matInput [matDatepicker]="datepickerStart" class="large-input"
+                                                    placeholder="Fecha inicio" formControlName="startDate"
+                                                    autocomplete="off" required
+                                                    (keydown.enter)="$event.preventDefault()">
+                                                <mat-datepicker-toggle matSuffix
+                                                    [for]="datepickerStart"></mat-datepicker-toggle>
+                                                <mat-datepicker #datepickerStart></mat-datepicker>
+                                                <mat-error *ngIf="startDate?.errors">
+                                                    Este campo es obligatorio.
+                                                </mat-error>
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col-lg-6 col-md-6 col-sm-12 my-3">
+                                            <mat-form-field class="form-group" appearance="outline" class="matField">
+                                                <mat-label class="mb-2">Fecha final</mat-label>
+                                                <input matInput [matDatepicker]="datepickerEnd" class="large-input"
+                                                    placeholder="Fecha final" formControlName="endDate"
+                                                    autocomplete="off" required
+                                                    (keydown.enter)="$event.preventDefault()">
+                                                <mat-datepicker-toggle matSuffix
+                                                    [for]="datepickerEnd"></mat-datepicker-toggle>
+                                                <mat-datepicker #datepickerEnd></mat-datepicker>
+                                                <mat-error *ngIf="endDate?.errors">
+                                                    Este campo es obligatorio.
+                                                </mat-error>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <div class="row mx-3 mt-3 mb-2">
+                                        <div class="col-lg-12 col-md-12 col-sm-12 d-flex justify-content-end">
+                                            <button mat-raised-button class="btnSize guardar text-dark my-2"
+                                                (click)="getDashboard()">
+                                                Consultar
+                                            </button>
+                                        </div>
+                                    </div>
+                                </mat-card>
+                            </div>
+                        </div>
+                    </form>
+                </mat-dialog-content>
+                <div class="col-lg-12 col-md-12 col-sm-12 my-3">
+                    <div class="row ghapics-pie-doughnut align-items-stretch">
+                        <div>
+                            <mat-card class="color-border">
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-6 col-sm-12 medicions">
+                                        <div class="graphic-bar-time my-3 card-content">
+                                            <h2 class="titleGraphics my-3 mx-3 text-align">
+                                                Tiempos de ofertas económicas
+                                            </h2>
+                                            <div class="graphics">
+                                                <app-tiempos-ofertas
+                                                    [dataEstaditicas]="dashboardListQuotation"></app-tiempos-ofertas>
+                                            </div>
+                                            <div class="measure-days">
+                                                <h6>Medida de tiempo (días)</h6>
+                                            </div>
+                                        </div>
+                                        <div class="graphic-bar-time card-content">
+                                            <div class="graphics">
+                                                <app-aprobacion
+                                                    [dataEstaditicas]="dashboardListApproved"></app-aprobacion>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-12 my-2 ofertas">
+                                        <div class="graphic-bar-time my-3 card-content">
+                                            <h2 class="titleGraphics my-3 text-align mx-3">
+                                                Ofertas generadas por línea de negocio
+                                            </h2>
+                                            <app-ofertas-linea-negocio
+                                                [dataEstaditicas]="dashboardListBusinessLines"></app-ofertas-linea-negocio>
+                                        </div>
+                                        <div class="graphic-bar-time my-3 card-content">
+                                            <h2 class="titleGraphics my-3 text-align mx-3">
+                                                Ofertas generadas por tipo de servicio
+                                            </h2>
+                                            <app-ofertas-tipo-servicio
+                                                [dataEstaditicas]="dashboardListServiceType"></app-ofertas-tipo-servicio>
+                                        </div>
+                                    </div>
+                                </div>
+                            </mat-card>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 my-3">
+                            <div>
+                                <mat-card class="color-border">
+                                    <div class="row">
+                                        <div class="col-lg-8 col-md-8 col-sm-12">
+                                            <h2 class="titleGraphics my-3 mx-3">Ofertas generadas vs Aprobadas</h2>
+                                            <app-ofertas-aprobadas
+                                                [dataEstaditicas]="dashboardListGenerated"></app-ofertas-aprobadas>
+                                        </div>
+                                        <div class="col-lg-4 col-md-4 col-sm-12 my-5">
+                                            <div class="row mx-3">
+                                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                                    <mat-card class="color-border-little2 my-2">
+                                                        <div class="gray my-3">
+                                                            <h2 class="values text-center">{{'$' +
+                                                                formatPrices(totalValued)}}</h2>
+                                                            <h2 class="paragraph my-3 text-center mx-3">Total cotizado
+                                                            </h2>
+                                                            <h2 class="paragraph my-3 text-center mx-3">COP millones
+                                                            </h2>
+                                                        </div>
+                                                    </mat-card>
+                                                </div>
+                                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                                    <mat-card class="color-border-little my-2">
+                                                        <div class="gray my-3">
+                                                            <h2 class="values text-center">{{offersGenerated}}</h2>
+                                                            <h2 class="paragraph my-3 text-center mx-3">Total</h2>
+                                                            <h2 class="paragraph my-3 text-center mx-3">Ofertas
+                                                                generadas</h2>
+                                                        </div>
+                                                    </mat-card>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </mat-card>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

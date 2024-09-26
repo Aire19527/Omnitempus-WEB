@@ -1,0 +1,248 @@
+<div mat-dialog-title class="container-title-modal">
+  Ingresar horario de trabajo Persona {{ data.personIndex + 1 }}
+</div>
+<mat-dialog-content class="custom-dialog-content">
+  <div *ngFor="let hourWorkFormGroup of hourWorkformGroups; let i = index">
+    <form class="down" [formGroup]="hourWorkFormGroup">
+      <div class="row">
+        <div class="row">
+          <div class="col-lg-12 col-md-12 col-sm-12 my-3">
+            <mat-label matLabel class="mb-2">Días de la semana*</mat-label>
+            <br />
+            <ul class="lista-horizontal my-2">
+              <li class="diaH col-lg-2 col-md-2">
+                <button
+                  [ngClass]="
+                    hourWorkFormGroup.get('day')?.value &&
+                    hourWorkFormGroup.get('day')?.value.includes('Lunes')
+                      ? 'btn-dH'
+                      : 'btn-dNH'
+                  "
+                  (click)="addDays('Lunes', i)"
+                >
+                  L
+                </button>
+              </li>
+              <li class="diaH col-lg-2 col-md-2">
+                <button
+                  [ngClass]="
+                    hourWorkFormGroup.get('day')?.value &&
+                    hourWorkFormGroup.get('day')?.value.includes('Martes')
+                      ? 'btn-dH'
+                      : 'btn-dNH'
+                  "
+                  (click)="addDays('Martes', i)"
+                >
+                  M
+                </button>
+              </li>
+              <li class="diaH col-lg-2 col-md-2">
+                <button
+                  [ngClass]="
+                    hourWorkFormGroup.get('day')?.value &&
+                    hourWorkFormGroup.get('day')?.value.includes('Miércoles')
+                      ? 'btn-dH'
+                      : 'btn-dNH'
+                  "
+                  (click)="addDays('Miércoles', i)"
+                >
+                  M
+                </button>
+              </li>
+              <li class="diaH col-lg-2 col-md-2">
+                <button
+                  [ngClass]="
+                    hourWorkFormGroup.get('day')?.value &&
+                    hourWorkFormGroup.get('day')?.value.includes('Jueves')
+                      ? 'btn-dH'
+                      : 'btn-dNH'
+                  "
+                  (click)="addDays('Jueves', i)"
+                >
+                  J
+                </button>
+              </li>
+              <li class="diaH col-lg-2 col-md-2">
+                <button
+                  [ngClass]="
+                    hourWorkFormGroup.get('day')?.value &&
+                    hourWorkFormGroup.get('day')?.value.includes('Viernes')
+                      ? 'btn-dH'
+                      : 'btn-dNH'
+                  "
+                  (click)="addDays('Viernes', i)"
+                >
+                  V
+                </button>
+              </li>
+              <li class="diaNH col-lg-2 col-md-2">
+                <button
+                  [ngClass]="
+                    hourWorkFormGroup.get('day')?.value &&
+                    hourWorkFormGroup.get('day')?.value.includes('Sábado')
+                      ? 'btn-dH'
+                      : 'btn-dNH'
+                  "
+                  (click)="addDays('Sábado', i)"
+                >
+                  S
+                </button>
+              </li>
+              <li class="diaNH col-lg-2 col-md-2">
+                <button
+                  [ngClass]="
+                    hourWorkFormGroup.get('day')?.value &&
+                    hourWorkFormGroup.get('day')?.value.includes('Domingo')
+                      ? 'btn-dH'
+                      : 'btn-dNH'
+                  "
+                  (click)="addDays('Domingo', i)"
+                >
+                  D
+                </button>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <br />
+        <div class="row">
+          <div class="col-lg-6 col-md-6 col-sm-12">
+            <mat-form-field
+              class="form-group"
+              appearance="outline"
+              class="matField"
+            >
+              <mat-label matLabel class="mb-3">Hora Inicio</mat-label>
+              <input
+                matInput
+                formControlName="startHour"
+                mask="Hh:m0"
+                placeholder="hh:mm"
+                autocomplete="off"
+              />
+              <mat-error *ngIf="hourWorkFormGroup.get('startHour')?.errors">
+                Este campo es obligatorio.
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-lg-6 col-md-6 col-sm-12">
+            <mat-form-field
+              class="form-group"
+              appearance="outline"
+              class="matField"
+            >
+              <mat-label matLabel class="mb-3">Hora finalización</mat-label>
+              <input
+                matInput
+                formControlName="endHour"
+                mask="Hh:m0"
+                placeholder="hh:mm"
+                autocomplete="off"
+              />
+              <mat-error
+                *ngIf="hourWorkFormGroup.get('endHour')?.errors?.['required']"
+              >
+                Este campo es obligatorio.
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="col-lg-6 col-md-6 col-sm-12">
+            <mat-form-field
+              class="form-group"
+              appearance="outline"
+              class="matField"
+            >
+              <mat-label matLabel class="mb-2"
+                >¿Se pagan horas extras?</mat-label
+              >
+              <mat-select
+                name=""
+                formControlName="extraHours"
+                [disableOptionCentering]="true"
+                required
+              >
+                <mat-option [value]="true"> Si </mat-option>
+                <mat-option [value]="false"> No </mat-option>
+              </mat-select>
+              <mat-error *ngIf="extraHours?.errors">
+                Este campo es obligatorio.
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-lg-6 col-md-6 col-sm-12">
+            <mat-form-field
+              class="form-group"
+              appearance="outline"
+              class="matField"
+            >
+              <mat-label matLabel class="mb-2">A partir de la hora</mat-label>
+              <input
+                matInput
+                formControlName="startHourExtra"
+                maxlength="5"
+                type="text"
+                mask="separator.2"
+                decimalMarker="."
+                autocomplete="off"
+              />
+              <mat-error
+                class="helper-text error"
+                *ngIf="
+                  hourWorkFormGroup.controls['startHourExtra']?.hasError(
+                    'max'
+                  ) && hourWorkFormGroup.controls['startHourExtra']?.touched
+                "
+              >
+                * El valor máximo es de 24.
+              </mat-error>
+
+              <mat-error
+                class="helper-text error"
+                *ngIf="
+                  hourWorkFormGroup.controls['startHourExtra']?.hasError(
+                    'min'
+                  ) && hourWorkFormGroup.controls['startHourExtra']?.touched
+                "
+              >
+                * El valor mínimo es de 1.
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-lg-6 col-md-6 col-sm-12 d-flex justify-content-start">
+            <button
+              mat-raised-button
+              class="boton btnSize guardar text-dark"
+              (click)="addDay()"
+            >
+              Agregar día
+            </button>
+            <button
+              mat-raised-button
+              class="boton btnSize cancelar text-dark mx-3"
+              (click)="deleteDay(i)"
+            >
+              Eliminar día
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions class="d-flex justify-content-end">
+  <button mat-raised-button class="btnSize cancelar" (click)="close(false)">
+    Cancelar
+  </button>
+  <button
+    mat-raised-button
+    class="btnSize guardar text-dark mx-3"
+    (click)="saveUpdateHourWork()"
+    *ngIf="!hidebutton"
+  >
+    Guardar
+  </button>
+</mat-dialog-actions>

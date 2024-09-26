@@ -1,0 +1,136 @@
+<div class="container-fluid">
+  <div class="row container-title-header">
+    <div class="col-md-8" align="start">
+      <h5 class="title">{{ title }}</h5>
+    </div>
+
+    <div class="col-md-4" align="end">
+      <div class="input-group mx-2">
+        <span class="input-group-text"><i class="fa fa-search"></i></span>
+        <input
+          type="text"
+          placeholder="Buscar"
+          class="form-control"
+          (keyup)="applyFilter($event)"
+          #input
+          style="margin-right: 10px"
+        />
+
+        <div class="input-group-prepend" *ngIf="showButtonCreate">
+          <button
+            mat-raised-button
+            class="button-primary text-dark"
+            (click)="createData()"
+          >
+            Crear
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+<div class="container-fluid container-padding mb-4">
+  <!-- <div class="row">
+    <div class="col-md-12">
+      <mat-form-field class="matField" appearance="outline">
+        <mat-label>Buscar</mat-label>
+        <input matInput (keyup)="applyFilter($event)" #input />
+        <mat-icon matPrefix style="margin-right: 5px">search</mat-icon>
+      </mat-form-field>
+    </div>
+  </div> -->
+  <div class="row">
+    <div class="design col-md-12 mat-elevation-z8">
+      <table mat-table [dataSource]="dataSource" matSort>
+        <ng-container
+          *ngFor="let column of displayedColumns.slice(0, -1); let i = index"
+          [matColumnDef]="column"
+        >
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header
+            class="disegnTable"
+          >
+            {{ titleColumn[i] }}
+          </th>
+          <td
+            mat-cell
+            *matCellDef="let row"
+            class="disegnRows"
+            [matTooltip]="
+              row[column] && row[column].length > 50 ? row[column] : null
+            "
+            matTooltipPosition="above"
+          >
+            {{
+              row[column] !== null
+                ? validTextOrNumber(row[column], titleColumn[i])
+                : ""
+            }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="acciones">
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+            style="text-align: end"
+            class="disegnTable"
+          >
+            {{ titleColumn[displayedColumns.length - 1] }}
+          </th>
+          <td
+            mat-cell
+            *matCellDef="let row"
+            style="text-align: end"
+            class="disegnRows"
+          >
+            <ng-container *ngIf="displayedColumns.includes('acciones')">
+              <button mat-icon-button [matMenuTriggerFor]="menu">
+                <mat-icon>more_vert</mat-icon>
+              </button>
+              <mat-menu #menu="matMenu" yPosition="below">
+                <ng-container>
+                  <button mat-menu-item (click)="editData(row)">
+                    <mat-icon>edit</mat-icon>
+                    <span>Editar</span>
+                  </button>
+                </ng-container>
+                <ng-container>
+                  <button mat-menu-item (click)="deleteData(row)">
+                    <mat-icon>delete</mat-icon>
+                    <span>Eliminar</span>
+                  </button>
+                </ng-container>
+              </mat-menu>
+            </ng-container>
+          </td>
+        </ng-container>
+
+        <tr
+          mat-header-row
+          *matHeaderRowDef="displayedColumns; sticky: true"
+        ></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+        <tr class="mat-row" *matNoDataRow>
+          <td
+            class="mat-cell no-data-cell"
+            [attr.colspan]="displayedColumns.length"
+          >
+            No hay datos para mostrar.
+          </td>
+        </tr>
+      </table>
+      <mat-paginator
+        [length]="length"
+        [pageSizeOptions]="[10, 15, 20, 100]"
+        aria-label="Select page of users"
+        class="disegnTable"
+      ></mat-paginator>
+    </div>
+  </div>
+</div>
+</div>

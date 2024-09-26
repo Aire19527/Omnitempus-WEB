@@ -1,0 +1,71 @@
+<h3>
+  Selecciona los menus de <strong> {{ data?.name | lowercase }}</strong
+  >:
+</h3>
+<mat-accordion>
+  <mat-list>
+    <ng-container *ngFor="let item of listMenuItem" [formGroup]="menuForm">
+      <ng-container *ngIf="item.subMenu.length == 0; else expansionPanel">
+        <mat-list-item class="item-menu">
+          <div class="item-content">
+            <mat-checkbox
+              [checked]="item.isAssigned"
+              [formControlName]="item.name"
+            ></mat-checkbox>
+            <mat-icon mat-list-icon>{{ item.icon }}</mat-icon>
+            <span class="title">{{ item.name }} </span>
+          </div>
+        </mat-list-item>
+      </ng-container>
+      <ng-template #expansionPanel>
+        <mat-expansion-panel class="mat-elevation-z0 item-menu">
+          <mat-expansion-panel-header>
+            <mat-panel-title class="expansion-panel-title">
+              <mat-icon>{{ item.icon }}</mat-icon>
+              <span class="title">{{ item.name }}</span>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+
+          <ng-container *ngIf="item.subMenu">
+            <mat-list>
+              <mat-list-item *ngFor="let subitem of item.subMenu">
+                <div class="item-content">
+                  <mat-checkbox
+                    [checked]="subitem.isAssigned"
+                    [formControlName]="subitem.name"
+                  ></mat-checkbox>
+                  <mat-icon mat-list-icon *ngIf="subitem.icon">{{
+                    subitem.icon
+                  }}</mat-icon>
+                  <span class="subTitle">{{ subitem.name }}</span>
+                </div>
+              </mat-list-item>
+            </mat-list>
+          </ng-container>
+        </mat-expansion-panel>
+      </ng-template>
+    </ng-container>
+  </mat-list>
+</mat-accordion>
+
+<div class="buttons d-flex justify-content-end">
+  <button
+    mat-raised-button
+    matStepperPrevious
+    class="btnSize cancelar text-dark mx-2"
+  >
+    Atrás
+  </button>
+
+  <button
+    mat-raised-button
+    class="btnSize guardar text-dark mx-2"
+    (click)="update('guardar')"
+  >
+    Guardar
+  </button>
+
+  <button mat-raised-button matStepperNext class="btnSize cancelar text-dark">
+    Siguiente
+  </button>
+</div>

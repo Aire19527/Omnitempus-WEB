@@ -1,0 +1,12 @@
+.stepper-propuesta {
+    display: flex;
+    justify-content: space-between;
+}
+
+.titleTable {
+    font-family: 'Gotham';
+    font-weight: 700;
+    color: black;
+    margin-left: 12px;
+    margin-top: auto;
+}

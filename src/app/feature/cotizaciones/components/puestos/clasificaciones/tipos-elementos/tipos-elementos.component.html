@@ -1,0 +1,156 @@
+<mat-accordion class="example-headers-align" multi>
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title class="subTitleAcordeon">
+        {{
+          principalInfoSubChargesQuotation.subChargesQuotation?.infoTraining
+            ?.pluralNameElementType
+        }}
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <app-elementos
+      [infoTraining]="
+        principalInfoSubChargesQuotation.subChargesQuotation?.infoTraining!
+      "
+      [subChargesQuotationId]="principalInfoSubChargesQuotation.id"
+    ></app-elementos>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title class="subTitleAcordeon">
+        {{
+          principalInfoSubChargesQuotation.subChargesQuotation?.infoTest
+            ?.pluralNameElementType
+        }}
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <app-elementos
+      [infoTest]="
+        principalInfoSubChargesQuotation.subChargesQuotation?.infoTest!
+      "
+      [subChargesQuotationId]="principalInfoSubChargesQuotation.id"
+    ></app-elementos>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title class="subTitleAcordeon">
+        {{
+          principalInfoSubChargesQuotation.subChargesQuotation?.infoCostHiring
+            ?.pluralNameElementType
+        }}
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <app-elementos
+      [infoCostHiring]="
+        principalInfoSubChargesQuotation.subChargesQuotation?.infoCostHiring!
+      "
+      [subChargesQuotationId]="principalInfoSubChargesQuotation.id"
+    ></app-elementos>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title class="subTitleAcordeon">
+        {{
+          principalInfoSubChargesQuotation.subChargesQuotation?.infoUniform
+            ?.pluralNameElementType
+        }}
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <app-elementos
+      [infoUniform]="
+        principalInfoSubChargesQuotation.subChargesQuotation?.infoUniform!
+      "
+      [subChargesQuotationId]="principalInfoSubChargesQuotation.id"
+    ></app-elementos>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title class="subTitleAcordeon">
+        {{
+          principalInfoSubChargesQuotation.subChargesQuotation
+            ?.infoResourcesPosition?.pluralNameElementType
+        }}
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <app-elementos
+      [infoResourcesPosition]="
+        principalInfoSubChargesQuotation.subChargesQuotation
+          ?.infoResourcesPosition!
+      "
+      [subChargesQuotationId]="principalInfoSubChargesQuotation.id"
+    ></app-elementos>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title class="subTitleAcordeon">
+        {{
+          principalInfoSubChargesQuotation.subChargesQuotation
+            ?.infoElementsCommunication?.pluralNameElementType
+        }}
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <app-elementos
+      [infoElementsCommunication]="
+        principalInfoSubChargesQuotation.subChargesQuotation
+          ?.infoElementsCommunication!
+      "
+      [subChargesQuotationId]="principalInfoSubChargesQuotation.id"
+    ></app-elementos>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title class="subTitleAcordeon">
+        {{
+          principalInfoSubChargesQuotation.subChargesQuotation?.infoWeapon
+            ?.pluralNameElementType
+        }}
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <app-elementos
+      [infoWeapon]="
+        principalInfoSubChargesQuotation.subChargesQuotation?.infoWeapon!
+      "
+      [subChargesQuotationId]="principalInfoSubChargesQuotation.id"
+    ></app-elementos>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title class="subTitleAcordeon">
+        {{
+          principalInfoSubChargesQuotation.subChargesQuotation?.infoVehicle
+            ?.pluralNameElementType
+        }}
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <app-elementos
+      [infoVehicle]="
+        principalInfoSubChargesQuotation.subChargesQuotation?.infoVehicle!
+      "
+      [subChargesQuotationId]="principalInfoSubChargesQuotation.id"
+    ></app-elementos>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title class="subTitleAcordeon">
+        {{
+          principalInfoSubChargesQuotation.subChargesQuotation
+            ?.infoElementsOther?.pluralNameElementType
+        }}
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <app-elementos
+      [infoElementsOther]="
+        principalInfoSubChargesQuotation.subChargesQuotation?.infoElementsOther!
+      "
+      [subChargesQuotationId]="principalInfoSubChargesQuotation.id"
+    ></app-elementos>
+  </mat-expansion-panel>
+</mat-accordion>

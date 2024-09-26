@@ -1,0 +1,207 @@
+<div mat-dialog-title class="container-title-modal">
+  {{ action | titlecase }} elemento
+</div>
+
+<mat-dialog-content class="custom-dialog-content">
+  <form class="mt-2" [formGroup]="formElement">
+    <div class="row">
+      <div class="col-lg-6 col-md-6 col-sm-12">
+        <mat-form-field
+          class="form-group"
+          appearance="outline"
+          class="matField"
+        >
+          <mat-label class="mb-2">Tipo de elemento</mat-label>
+          <mat-select
+            name="typeElement"
+            formControlName="typeElement"
+            [disableOptionCentering]="true"
+          >
+            <mat-option value="Tangible"> Tangible </mat-option>
+            <mat-option value="Servicio"> Servicio </mat-option>
+          </mat-select>
+          <mat-error *ngIf="formElement.get('typeElement')?.errors">
+            Este campo es obligatorio.
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="col-lg-6 col-md-6 col-sm-12">
+        <mat-form-field
+          class="form-group"
+          appearance="outline"
+          class="matField"
+        >
+          <mat-label matLabel class="mb-2">Código</mat-label>
+          <input
+            matInput
+            class="large-input"
+            formControlName="code"
+            maxlength="10"
+            type="text"
+            autocomplete="off"
+          />
+          <mat-error *ngIf="formElement.get('code')?.hasError('required')">
+            Este campo es obligatorio.
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="col-lg-6 col-md-6 col-sm-12">
+        <mat-form-field
+          class="form-group"
+          appearance="outline"
+          class="matField"
+        >
+          <mat-label matLabel class="mb-2">Nombre</mat-label>
+          <input
+            matInput
+            formControlName="name"
+            maxlength="300"
+            autocomplete="off"
+          />
+          <mat-error *ngIf="formElement.get('name')?.hasError('required')">
+            Este campo es obligatorio.
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="col-lg-6 col-md-6 col-sm-12">
+        <mat-form-field
+          class="form-group"
+          appearance="outline"
+          class="matField"
+        >
+          <mat-label class="mb-2">Clasificación de elemento</mat-label>
+          <mat-select
+            name="classificationId"
+            (selectionChange)="onClassificationChange($event)"
+            formControlName="classificationId"
+            [disableOptionCentering]="true"
+            required
+          >
+            <mat-option
+              *ngFor="let elementType of elementTypeList"
+              [value]="elementType.id"
+            >
+              {{ elementType.name }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="classificationId?.errors">
+            Este campo es obligatorio.
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="col-lg-6 col-md-6 col-sm-12">
+        <mat-form-field
+          class="form-group"
+          appearance="outline"
+          class="matField"
+        >
+          <mat-label class="mb-2"
+            >¿Distribución por puesto o persona?</mat-label
+          >
+          <mat-select
+            name="distributionType"
+            formControlName="distributionType"
+            [disableOptionCentering]="true"
+            required
+          >
+            <mat-option [value]="0"> Puesto </mat-option>
+            <mat-option [value]="1"> Persona </mat-option>
+          </mat-select>
+          <mat-error
+            *ngIf="formElement.get('distributionType')?.hasError('required')"
+          >
+            Este campo es obligatorio.
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="col-lg-6 col-md-6 col-sm-12">
+        <mat-form-field
+          class="form-group"
+          appearance="outline"
+          class="matField"
+        >
+          <mat-label class="mb-2"
+            >¿Se relaciona a uno o varios elementos?</mat-label
+          >
+          <mat-select
+            name="isRelationShip"
+            formControlName="isRelationShip"
+            [disableOptionCentering]="true"
+          >
+            <mat-option value="si"> Si </mat-option>
+            <mat-option value="no"> No </mat-option>
+          </mat-select>
+          <mat-error
+            *ngIf="formElement.get('isRelationShip')?.hasError('required')"
+          >
+            Este campo es obligatorio.
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div
+        class="col-lg-12 col-md-12 col-sm-12"
+        *ngIf="formElement.get('isRelationShip')?.value === 'si'"
+      >
+        <mat-form-field
+          class="form-group"
+          appearance="outline"
+          class="matField"
+        >
+          <mat-label class="mb-2">Elementos</mat-label>
+          <mat-select
+            multiple
+            name="elementRelationId"
+            formControlName="elementRelationId"
+            [disableOptionCentering]="true"
+          >
+            <mat-option
+              *ngFor="let element of elementList"
+              [value]="element.id"
+            >
+              {{ element.name }}
+            </mat-option>
+          </mat-select>
+          <!-- <mat-error *ngIf="elementRelationId?.errors">
+            Este campo es obligatorio.
+          </mat-error> -->
+        </mat-form-field>
+      </div>
+    </div>
+    <mat-form-field class="form-group" appearance="outline" class="matField">
+      <mat-label matLabel class="mb-3">Descripción</mat-label>
+      <textarea
+        matInput
+        formControlName="description"
+        rows="4"
+        maxlength="500"
+        autocomplete="off"
+      ></textarea>
+      <mat-error *ngIf="formElement.get('description')?.hasError('maxlength')">
+        Máximo 500 caracteres permitidos para la descripción.
+      </mat-error>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions class="d-flex justify-content-end">
+  <button
+    mat-raised-button
+    class="btnSize cancelar text-dark"
+    [mat-dialog-close]="false"
+  >
+    Cancelar
+  </button>
+  <button
+    mat-raised-button
+    class="btnSize guardar text-dark mx-3"
+    (click)="saveUpdateElemento()"
+    [disabled]="formElement.invalid"
+  >
+    {{ titleButton }}
+  </button>
+</mat-dialog-actions>

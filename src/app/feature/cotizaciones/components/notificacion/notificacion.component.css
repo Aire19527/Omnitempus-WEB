@@ -1,0 +1,23 @@
+.mat-raised-button {
+    background: #f4a423;
+}
+
+th, mat-paginator {
+
+    font-size: 16px;
+    font-weight: 800;
+    color: black;
+    background-color: #e6e6e6 !important;
+
+}
+
+td{
+    font-size: 14px;
+    font-weight: 600;
+    color: black;
+    text-decoration: none;
+}
+
+.design {
+    padding: 0;
+}

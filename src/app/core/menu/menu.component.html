@@ -1,0 +1,88 @@
+<mat-sidenav-container class="container-menu">
+  <mat-sidenav class="sidenav-menu" mode="side" [(opened)]="opened">
+    <div class="content">
+      <div class="user">
+        <img
+          src="assets/imgs/logoOmnitempus.jpeg"
+          alt="Logo Omnitempus"
+          class="logo-image m-3"
+        />
+        <div class="info">
+          <h4 class="name">{{ profile.displayName }}</h4>
+          <h6 class="email">{{ profile.mail }}</h6>
+        </div>
+      </div>
+    </div>
+
+    <ul>
+      <div *ngFor="let item of menus">
+        <li *ngIf="item.url">
+          <a
+            routerLink="{{ item.url }}"
+            routerLinkActive="active"
+            *ngIf="item.url"
+          >
+            <div class="icon-text-container">
+              <mat-icon class="icono">{{ item.icon }}</mat-icon>
+              <span>{{ item.name }}</span>
+            </div>
+          </a>
+        </li>
+
+        <li *ngIf="!item.url">
+          <a (click)="toggleSubmenu()" *ngIf="!item.url">
+            <div class="icon-text-container">
+              <mat-icon class="icono"> {{ item.icon }}</mat-icon>
+              <span class="menu-text">{{ item.name }}</span>
+              <i
+                class="fa-solid"
+                [ngClass]="{
+                  'fa-chevron-right': !showSubmenu,
+                  'fa-chevron-down': showSubmenu
+                }"
+              ></i>
+            </div>
+          </a>
+          <ul class="submenu" [ngClass]="{ show: showSubmenu }">
+            <li *ngFor="let subMenu of item.subMenu">
+              <a
+                (click)="showSubmenu = true"
+                routerLink="{{ subMenu.url }}"
+                routerLinkActive="active"
+              >
+                <span class="subtitle-provider">{{ subMenu.name }}</span>
+              </a>
+            </li>
+          </ul>
+        </li>
+      </div>
+    </ul>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <mat-toolbar class="header">
+      <button (click)="open()" class="btn-open">
+        <mat-icon class="icon-menu m-2">menu</mat-icon>
+      </button>
+      <div class="nav-menu col">
+        <button mat-button [matMenuTriggerFor]="close">
+          <mat-icon class="icon-menu m-2">person_pin</mat-icon>
+        </button>
+        <mat-menu #close="matMenu">
+          <button mat-menu-item (click)="logout()">Cerrar sesión</button>
+        </mat-menu>
+      </div>
+    </mat-toolbar>
+    <div class="breadcrumb-custom">
+      <xng-breadcrumb [separator]="iconTemplate">
+        <ng-container *xngBreadcrumbItem="let breadcrumb">
+          <ng-container>{{ breadcrumb }}</ng-container>
+        </ng-container>
+      </xng-breadcrumb>
+      <ng-template #iconTemplate>
+        <mat-icon>arrow_right</mat-icon>
+      </ng-template>
+    </div>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

@@ -1,0 +1,23 @@
+.full-width{
+    width: 100%;
+    
+  }
+  
+.ambit-container{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 100%;
+    margin: 0 auto;
+  }
+  .ambit{
+    font-weight: bold;
+    color: rgb(0, 0, 0);
+    font-size: 20px;
+    width: 30%;
+    min-height: fit-content;
+    height: 250px;
+    overflow: auto;
+    margin: 10px 0;
+    align-self:start;
+  }

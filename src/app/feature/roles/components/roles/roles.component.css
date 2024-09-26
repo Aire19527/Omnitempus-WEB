@@ -1,0 +1,13 @@
+.mat-raised-button{
+    background: #33323c;
+}
+
+.actions-button{
+    text-align-last: end;
+}
+
+.contenedor{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}

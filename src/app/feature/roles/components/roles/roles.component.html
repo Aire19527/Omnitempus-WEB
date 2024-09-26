@@ -1,0 +1,16 @@
+<mat-card>
+  <mat-card-actions class="contenedor">
+    <div class="title">
+      <h3>Roles</h3>
+    </div>
+
+    <div class="actions-button">
+      <button mat-raised-button class="text-white m-3">Crear</button>
+      <button mat-raised-button class="text-white m-3">Actualizar</button>
+      <button mat-raised-button class="text-white m-3">Eliminar</button>
+    </div>
+
+  </mat-card-actions>
+
+  <app-table [displayedColumns]="displayedColumns" [titleColumn]="titleColumn"></app-table>
+</mat-card>

@@ -1,0 +1,82 @@
+<div mat-dialog-title class="container-title-modal">
+    {{ action | titlecase }} elemento
+</div>
+
+<mat-dialog-content class="custom-dialog-content">
+    <form class="down mt-3" [formGroup]="elementFormGroup">
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-12">
+                <mat-form-field class="form-group" appearance="outline" class="matField">
+                    <mat-label matLabel class="mb-2">Clasificación de elemento</mat-label>
+                    <mat-select name="elementTypeId" formControlName="elementTypeId" [disableOptionCentering]="true"
+                        required>
+                        <mat-option>
+                            Seleccione una opción
+                        </mat-option>
+                        <mat-option *ngFor="let elementType of elementTypes" [value]="elementType.id"
+                            (click)="onClasificationSelectionChange()">
+                            {{elementType.name}}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="elementFormGroup.get('elementTypeId')?.hasError('required')">
+                        Este campo es obligatorio
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12">
+                <mat-form-field class="form-group" appearance="outline" class="matField">
+                    <mat-label matLabel class="mb-2">Elemento</mat-label>
+                    <mat-select name="elementId" formControlName="elementId" [disableOptionCentering]="true" required [disabled]="!elementFormGroup.get('elementTypeId')?.valid">
+                        <mat-option *ngFor="let elementProvider of elementProviderList"
+                            [value]="elementProvider.elementId" (click)="onElementSelectionChange(elementProvider)">
+                            {{elementProvider.elementName}} - {{elementProvider.supplierName}} -
+                            {{'$' + formatUnitPrice(elementProvider.unitPrice)}}
+                        </mat-option>
+                        <mat-option *ngIf="elementProviderList.length <= 0">
+                            No hay elementos para la mostrar.
+                        </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="elementFormGroup.get('elementId')?.hasError('required')">
+                        Este campo es obligatorio.
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12">
+                <mat-form-field class="form-group" appearance="outline" class="matField">
+                    <mat-label matLabel class="mb-2">¿Distribución por puesto o persona?</mat-label>
+                    <mat-select name="distributionType" formControlName="distributionType"
+                        [disableOptionCentering]="true" required>
+                        <mat-option [value]="0">Persona</mat-option>
+                        <mat-option [value]="1">Puesto</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="elementFormGroup.get('distributionType')?.hasError('required')">
+                        Este campo es obligatorio
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12">
+                <mat-form-field class="form-group" appearance="outline" class="matField">
+                    <mat-label matLabel class="mb-2">Cantidad</mat-label>
+                    <input matInput formControlName="quantity" required maxlength="3" max="999" type="text"
+                        mask="separator.2" thousandSeparator="," decimalMarker="." autocomplete="off">
+                    <mat-error *ngIf="elementFormGroup.get('quantity')?.errors?.['required']">
+                        Este campo es obligatorio
+                    </mat-error>
+                    <mat-error *ngIf="elementFormGroup.get('quantity')?.errors?.['min']">
+                        El valor del porcentaje debe ser mayor o igual a 1.
+                    </mat-error>
+                    <mat-error *ngIf="elementFormGroup.get('quantity')?.errors?.['max']">
+                        El valor del porcentaje debe ser menor o igual a 999.
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+    </form>
+</mat-dialog-content>
+
+
+<mat-dialog-actions class="d-flex justify-content-end">
+    <button mat-raised-button class="btnSize cancelar text-dark" (click)="close(false)">Cancelar</button>
+    <button mat-raised-button class="btnSize guardar text-dark mx-3" (click)="saveUpdateSubChargesElements()"
+        [disabled]="elementFormGroup.invalid">{{titleButton}}</button>
+</mat-dialog-actions>

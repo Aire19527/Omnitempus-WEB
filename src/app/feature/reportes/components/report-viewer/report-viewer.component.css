@@ -1,0 +1,57 @@
+.loadPdf{
+    font-size: xx-large;
+    font-weight: 900;
+    margin-top: 20px;
+    margin-left: 20px;
+}
+
+.btnOptions{
+    background-color:  var(--primary-color) !important;
+    margin: 1px;
+}
+
+.mainButton{
+    background-color: #3B3535;
+}
+
+.floating-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000; /* Asegura que esté por encima de cualquier otro contenido */
+  }
+  
+  .main-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+  
+  .sub-buttons {
+    display: none;
+    position: absolute;
+    bottom: 100%;
+    right: 0;
+    margin-bottom: 3px;
+  }
+  
+  .sub-buttons button {
+    display: block;
+    width: 100%;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    margin-top: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .floating-button:hover .sub-buttons {
+    display: block;
+  }
+  
+  

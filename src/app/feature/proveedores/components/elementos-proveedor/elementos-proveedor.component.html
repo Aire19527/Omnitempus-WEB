@@ -1,0 +1,80 @@
+<!-- <div class="container-fluid">
+    <div class="search-filter row">
+        <div class="col-md-4">
+            <div class="input-group">
+                <span class="input-group-text"><i class="fa fa-search"></i></span>
+                <input type="text" placeholder="Buscar" class="form-control" (keyup)="applyFilter($event)" #input
+                    style="margin-right: 10px" />
+            </div>
+        </div>
+    </div>
+</div> -->
+
+<div class="container-fluid">
+    <div class="rowr">
+        <h5 class="col title">{{nameOfProvider}}</h5>
+        <div class="design col-md-12 mat-elevation-z8">
+            <table mat-table [dataSource]="dataSource" matSort>
+                <ng-container matColumnDef="id">
+                    <th mat-header-cell *matHeaderCellDef> Id </th>
+                    <td mat-cell *matCellDef="let row"> {{row.id}} </td>
+                </ng-container>
+                <ng-container matColumnDef="check">
+                    <th mat-header-cell *matHeaderCellDef>
+                        <mat-checkbox [(ngModel)]="selectAll" (change)="allCheck($event)"></mat-checkbox>
+                    </th>
+                    <td mat-cell *matCellDef="let row">
+                        <mat-checkbox [(ngModel)]="row.checked" (change)="selectCheck(row)"></mat-checkbox>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="elementTypeName">
+                    <th mat-header-cell *matHeaderCellDef> Clasificación de elemento </th>
+                    <td mat-cell *matCellDef="let row"> {{row.elementTypeName}} </td>
+                </ng-container>
+                <ng-container matColumnDef="code">
+                    <th mat-header-cell *matHeaderCellDef class="titleColumHeader"> Código</th>
+                    <td mat-cell *matCellDef="let row" class="titleColumnCell"> {{row.code}} </td>
+                </ng-container>
+                <ng-container matColumnDef="element">
+                    <th mat-header-cell *matHeaderCellDef class="titleColumHeader"> Elemento </th>
+                    <td mat-cell *matCellDef="let row" class="titleColumnCell" [matTooltip]="row.elementName.length > 50 ? row.elementName : ''">  {{row.elementName.length > 50 ? (row.elementName | slice:0:50) + '...' : row.elementName}} </td>
+                </ng-container>
+                <ng-container matColumnDef="unitPrice">
+                    <th mat-header-cell *matHeaderCellDef class="titleColumHeader"> Costo </th>
+                    <td mat-cell class="titleColumnCell" *matCellDef="let row" prefix="$" type="text" mask="separator.2"
+                        thousandSeparator="," decimalMarker="."> {{'$' + formatUnitPrice(row.unitPrice)}} </td>
+                </ng-container>
+                <ng-container matColumnDef="acciones">
+                    <th mat-header-cell *matHeaderCellDef style="text-align: end"> Acciones </th>
+                    <td mat-cell *matCellDef="let row" style="text-align: end">
+                        <button mat-icon-button [matMenuTriggerFor]="menu">
+                            <mat-icon>more_vert</mat-icon>
+                        </button>
+                        <mat-menu #menu="matMenu" yPosition="below">
+                            <button mat-menu-item (click)="showTable(row.id)">
+                                <i class="fa fa-eye" aria-hidden="true"></i>
+                                <span> Ver incrementos</span>
+                            </button>
+                        </mat-menu>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                <tr class="mat-row" *matNoDataRow>
+                    <td class="mat-cell no-data-cell" colspan="4"> No hay datos para mostrar.</td>
+                </tr>
+            </table>
+
+            <mat-paginator  [length]="listTurnos" [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+        </div>
+
+        <div class="buttons col">
+            <button mat-raised-button matStepperPrevious class="btnSize cancelar text-dark">Atrás</button>
+            <button mat-raised-button class="btnSize guardar  text-dark" (click)="openDialog('crear')">Registrar
+                incremento</button>
+            <button mat-raised-button matStepperNext class="btnSize cancelar text-dark"
+                (click)="goBack()">Salir</button>
+        </div>
+    </div>
+</div>

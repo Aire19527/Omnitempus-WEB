@@ -1,0 +1,12 @@
+<app-table
+  [displayedColumns]="displayedColumns"
+  [titleColumn]="titleColumn"
+  [url]="url"
+  [showButtonCreate]="true"
+  [title]="title"
+  (dataCreate)="dataCreate()"
+  [changeUrl]="changeUrl"
+  (dataEdit)="dataEdit($event)"
+  [validateFormat]="true"
+  [format]="formatField"
+></app-table>

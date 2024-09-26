@@ -1,0 +1,45 @@
+.lista-horizontal {
+    list-style-type: none;
+    display: inline-flex;
+    padding: 0;
+}
+
+li button {
+    border-radius: 100%;
+    width: 90%;
+    height: 35px;
+    border: none;
+}
+
+.diaH {
+    margin-right: 12px;
+}
+
+.diaNH {
+    margin-right: 12px;
+}
+
+.btn-dH {
+    background: #f4a423;
+    border-color: #f4a423;
+}
+
+.btn-dNH {
+    background: #b4b4b4;
+    border-color: #b4b4b4;
+}
+
+.boton{
+    margin-top: 18px;
+}
+
+/* .fixed-buttons-container {
+    position: sticky;
+    z-index: 999; 
+} */
+
+.schedulePerson{
+    font-family: 'Gotham', 'Novecentowide', sans-serif;
+    color: black;
+    font-weight: 600;
+}

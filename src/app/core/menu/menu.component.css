@@ -1,0 +1,168 @@
+.sidenav-menu {
+    background-color: #ffffff;
+    /* color: black; */
+    max-width: 300px;
+    width: 100%;
+}
+
+@media (max-width: 768px) {
+    .sidenav-menu {
+        max-width: 250px;
+    }
+}
+
+@media (max-width: 580px) {
+    .container-menu {
+        display: none;
+    }
+}
+
+.sidenav-menu li a {
+    color: black;
+    margin-top: 15px;
+    text-decoration: none;
+}
+
+ul {
+    list-style-type: none;
+}
+
+li {
+    margin-top: 25px;
+}
+
+.header {
+    position: relative;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: #ffffff;
+    border-bottom: 1px solid #ccc;
+}
+
+.logo-image {
+    width: 80%;
+    height: 48px;
+    flex-shrink: 0;
+}
+
+.container-menu {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #EFF3F3;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.user {
+    text-align: center;
+}
+
+.icono-user {
+    left: auto;
+}
+
+.icon {
+    font-size: 20px;
+    margin-right: 20px;
+}
+
+.icon-text-container {
+    display: flex;
+    align-items: center;
+    /* Centra verticalmente los elementos */
+}
+
+.icono {
+    font-size: inherit;
+    /* Hereda el tamaño de fuente del elemento padre */
+    margin-right: 6px;
+    /* Espacio entre el icono y el texto */
+    margin-top: 5px
+}
+
+.nav-menu {
+    justify-content: right;
+    display: flex;
+    align-content: center;
+}
+
+.icon-menu {
+    font-size: 30px;
+}
+
+.btn-open {
+    border: none;
+    background-color: transparent;
+    padding: 0;
+}
+
+.name {
+    font-weight: bold;
+    color: black;
+    font-size: larger;
+}
+
+.email {
+    color: black;
+    overflow-wrap: break-word;
+    word-break: break-all;
+    max-width: 100%;
+}
+
+ul li a {
+    display: block;
+    margin-right: 30px;
+    margin-bottom: -17px;
+    text-decoration: none;
+    padding: 5px;
+    font-size: large;
+    font-weight: bold;
+    color: var(--blue-color) !important;
+    transition: background-color 0.3s ease;
+}
+
+ul li a:hover,
+ul li a.active {
+    /* background-color: #dc9420; */
+    color: #ea950c !important;
+    border-bottom: 2px solid var(--primary-color);
+
+}
+
+
+.breadcrumb-custom {
+    padding-left: 26px;
+    padding-top: 10px;
+    padding-bottom: 0px;
+    background-color: #ffff;
+}
+
+.submenu {
+    display: none;
+    list-style-type: none;
+    padding-left: 20px; 
+  }
+  
+  .submenu.show {
+    display: block;
+  }
+  
+
+  .subtitle-provider{
+    font-size: 16px;
+  }
+
+  .menu-text {
+    margin-right: auto;
+    justify-content: end;
+  }
+  

@@ -1,0 +1,52 @@
+<div class="container-title-header"></div>
+<div class="container-fluid container-padding">
+  <!-- <mat-stepper #stepper (selectionChange)="onStepChange($event)"> -->
+  <mat-stepper linear #stepper (selectionChange)="onStepChange($event)">
+    <mat-step [stepControl]="notificationsFormGroup" errorMessage="Los datos son requeridos.">
+      <form class="down mt-3" [formGroup]="notificationsFormGroup">
+        <div class="row">
+          <ng-template matStepLabel>Información básica</ng-template>
+          <div class="col-lg-6 col-md-6 col-sm-12">
+            <mat-form-field class="form-group" appearance="outline" class="matField">
+              <mat-label matLabel class="mb-2">Tipo de notificación</mat-label>
+              <mat-select name="notificationType" formControlName="notificationTypeId" [disableOptionCentering]="true">
+                <mat-option *ngFor="let elementType of notificationsTypes" [value]="elementType.notificationTypeId">
+                  {{ elementType.notificationType }}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="notificationTypeId?.errors">
+                Este campo es obligatorio
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-lg-6 col-md-6 col-sm-12">
+            <mat-form-field class="form-group" appearance="outline" class="matField">
+              <mat-label matLabel class="mb-2">Nombre del área</mat-label>
+              <input matInput formControlName="nameArea" maxlength="300" autocomplete="off" />
+              <mat-error *ngIf="nameArea?.errors">
+                Este campo es obligatorio.
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="buttons">
+          <button mat-raised-button class="btnSize cancelar text-dark" (click)="goBack()">
+            Cancelar
+          </button>
+          <button mat-raised-button class="btnSize guardar text-dark" (click)="saveNotifications(true,'guardar')"
+            [disabled]="notificationsFormGroup.invalid">
+            Guardar
+          </button>
+          <button mat-raised-button class="btnSize cancelar text-dark" (click)="saveNotifications(false, 'siguiente')">
+            Siguiente
+          </button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="emailFormGroup" errorMessage="Los datos son requeridos." [editable]="isEditable">
+      <app-correos [data]="data">
+        <ng-template matStepLabel>Correos</ng-template>
+      </app-correos>
+    </mat-step>
+  </mat-stepper>
+</div>

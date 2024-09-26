@@ -1,0 +1,106 @@
+<div class="container-fluid">
+  <div class="row container-title-header">
+    <div class="col-md-8" align="start">
+      <h5 class="title">Parámetros generales</h5>
+    </div>
+
+    <div class="col-md-4" align="end">
+      <div class="input-group">
+        <span class="input-group-text"><i class="fa fa-search"></i></span>
+        <input
+          type="text"
+          placeholder="Buscar"
+          class="form-control"
+          (keyup)="applyFilter($event)"
+          #input
+          style="margin-right: 10px"
+          autocomplete="off"
+        />
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid container-padding">
+    <div class="row">
+      <div class="row">
+        <div class="design col-md-12 mat-elevation-z8">
+          <table
+            mat-table
+            [dataSource]="dataSource"
+            matSort
+            style="width: 100%"
+          >
+            <!-- Position Column -->
+            <ng-container matColumnDef="parameter">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                Parámetro
+              </th>
+              <td mat-cell *matCellDef="let element">
+                {{ element.parameter }}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="value">
+              <th mat-header-cell *matHeaderCellDef>Valor</th>
+              <td mat-cell *matCellDef="let element">
+                {{ getValue(element) }}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="minimumValue">
+              <th mat-header-cell *matHeaderCellDef>Valor mínimo</th>
+              <td mat-cell *matCellDef="let element">
+                {{ getMinimoValue(element) }}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="maximumValue">
+              <th mat-header-cell *matHeaderCellDef>Valor máximo</th>
+              <td mat-cell *matCellDef="let element">
+                {{ getMaximoValue(element) }}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="parameterType">
+              <th mat-header-cell *matHeaderCellDef>Tipo Parámetro</th>
+              <td mat-cell *matCellDef="let element">
+                {{ element.parameterType }}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="acciones">
+              <th mat-header-cell *matHeaderCellDef style="text-align: end">
+                Acciones
+              </th>
+              <td mat-cell *matCellDef="let element" style="text-align: end">
+                <button
+                  mat-icon-button
+                  [matMenuTriggerFor]="menu"
+                  aria-label="Example icon-button with a menu"
+                >
+                  <mat-icon>more_vert</mat-icon>
+                </button>
+                <mat-menu #menu="matMenu">
+                  <button mat-menu-item (click)="dataEdit(element)">
+                    <mat-icon>edit</mat-icon>
+                    <span>Editar</span>
+                  </button>
+                </mat-menu>
+              </td>
+            </ng-container>
+
+            <tr
+              mat-header-row
+              *matHeaderRowDef="displayedColumns; sticky: true"
+            ></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+          </table>
+          <mat-paginator
+            [pageSizeOptions]="[10, 25, 50, 100]"
+            aria-label="Select page of users"
+          >
+          </mat-paginator>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

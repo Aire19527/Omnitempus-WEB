@@ -1,0 +1,43 @@
+<div mat-dialog-title class="container-title-modal">
+  {{ action | titlecase }} poliza
+</div>
+
+<mat-dialog-content class="custom-dialog-content">
+  <form class="mt-2" [formGroup]="polizaFormGroup">
+    <div class="row">
+      <div class="col-lg-6 col-md-6 col-sm-12">
+        <mat-form-field class="form-group" appearance="outline" class="matField">
+          <mat-label class="mb-2">Póliza</mat-label>
+          <mat-select name="name" formControlName="policyId" [disableOptionCentering]="true" required>
+            <mat-option *ngFor="let policy of policyList" [value]="policy.id" (click)="onPolicySelectionChange(policy)">
+              {{ policy.name }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="policyId?.errors">
+            Este campo es obligatorio.
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-lg-6 col-md-6 col-sm-12">
+        <mat-form-field class="form-group" appearance="outline" class="matField">
+          <mat-label>Porcentaje</mat-label>
+          <input matInput class="large-input" formControlName="percentage" type="text" max="100" min="0" maxlength="5"
+            suffix="%" mask="separator.2" thousandSeparator="," decimalMarker="." required autocomplete="off" />
+          <mat-error *ngIf="polizaFormGroup.get('percentage')?.hasError('required')">
+            Este campo es obligatorio.
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions class="d-flex justify-content-end">
+  <button mat-raised-button class="btnSize cancelar text-dark" [mat-dialog-close]="false">
+    Cancelar
+  </button>
+  <button mat-raised-button class="btnSize guardar text-dark mx-3" (click)="saveUpdatePoliza()"
+    [disabled]="polizaFormGroup.invalid">
+    {{ titleButton }}
+  </button>
+</mat-dialog-actions>

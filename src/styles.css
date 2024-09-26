@@ -1,0 +1,222 @@
+:root {
+    --primary-color: #f4a423;
+    --secondary-color: #33323C;
+    --blue-color: #164469;
+  }
+
+/* You can add global styles to this file, and also import other style files */
+@import '@angular/material/prebuilt-themes/indigo-pink.css';
+@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+
+@font-face {
+    font-family: 'Gotham';
+    src: url('./assets/fonts/Gotham-Black.otf');
+    src: url('./assets/fonts/Gotham-Thin.otf');
+}
+
+@font-face {
+    font-family: 'Novecentowide';
+    src: url('../src/assets/fonts/Novecentowide-Normal.otf');
+}
+
+@font-face {
+    font-family: 'Novecentowide-Bold';
+    src: url('../src/assets/fonts/Novecentowide-Bold.otf');
+}
+
+html,
+body {
+    margin: 0;
+}
+
+* {
+    font-family: 'Gotham', 'Novecentowide', sans-serif;
+}
+
+.title {
+    color: var(--blue-color) !important;
+    font-family: 'Futura';
+    font-size: 24px;
+    font-weight: 600;
+    padding-top: 8px;
+}
+
+.button-primary {
+    background-color: var(--primary-color) !important;
+    color: black !important;
+    font-weight: bold;
+    font-size: larger ;
+}
+.button-primary:disabled{
+    background-color: rgb(224,224,224) !important;
+    cursor: not-allowed !important;
+}
+
+.matField {
+    font-size:  large !important;
+    font-weight: 600 !important;
+    width: 100% !important;
+}
+
+.guardar {
+    background: var(--primary-color) !important;
+    color: black !important;
+    font-weight: bold;
+    font-size: larger ;
+}
+
+.guardar:disabled{
+    background-color: rgb(224,224,224) !important;
+    cursor: not-allowed !important;
+}
+
+.cancelar {
+    background: white;
+    font-weight: bold;
+    font-size: larger ;
+}
+
+.btnSize {
+    font-size: 18px;
+}
+
+/* migra de pan */
+.xng-breadcrumb-root {
+    color: #5470FF !important ;
+    font-size: larger;
+    font-weight: 600;
+}
+.xng-breadcrumb-separator {
+    color: #3939398d !important ;
+    font-size: larger;
+}
+
+.xng-breadcrumb-trail{
+    color: #164469 !important;
+}
+
+.mat-step-header .mat-step-icon-selected, .mat-step-header .mat-step-icon-state-done, .mat-step-header .mat-step-icon-state-edit {
+    background-color:  var(--primary-color) !important;
+    color: #fff;
+}
+
+
+.container-title-header{
+    background-color: #ffff;
+    padding-left: 15px; 
+    padding-right: 15px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--primary-color);
+}
+
+.container-title-modal{
+    background-color: #ffff;
+    border-bottom: 2px solid var(--primary-color);
+}
+.container-padding{
+    padding-left: 20px; padding-right: 15px; padding-top: 15px
+}
+
+
+.mat-checkbox-background {
+    background-color: transparent !important; 
+    color: #fff;
+}
+
+.mat-checkbox-checked .mat-checkbox-background {
+    background-color: var(--primary-color) !important; 
+}
+
+
+.swal2-styled.swal2-confirm{
+    color: black !important;
+    font-weight: bold;
+    border-radius: 0.5em;
+}
+.swal2-styled.swal2-cancel{
+    color: black !important;
+    font-weight: bold;
+    border-radius: 0.5em;
+}
+
+
+.titleAcordeon {
+    color: var(--blue-color) !important;
+    font-size: large;
+    font-family: sans-serif;
+    font-weight: 550;
+    padding-top: 5px;
+}
+
+.subTitleAcordeon{
+    
+    color: #09131a!important;
+    font-weight: 500;
+    font-size: medium;
+    font-family: sans-serif;
+    
+}
+
+
+
+.circle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    margin-right: 10px;
+    /* Ajusta este valor para separar los círculos */
+}
+
+.black-circle {
+    background-color: #b4b4b4;
+    color: black;
+}
+
+.yellow-circle {
+    background-color: #f4a423;
+    color: black;
+}
+
+.circle-container {
+    display: flex;
+}
+
+.mat-mdc-select-value {
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: black !important;
+    font-weight: bold;  
+}
+
+/* version 16 */
+.mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-floating-label, .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-floating-label--float-above {
+    
+    color:  rgba(25, 24, 24, 0.8) !important;
+    font-weight: bold;
+}
+.mdc-text-field--outlined.mdc-text-field--invalid:not(.mdc-text-field--disabled) .mdc-floating-label, .mdc-text-field--outlined.mdc-text-field--invalid:not(.mdc-text-field--disabled) .mdc-floating-label--float-above {
+    color:rgba(255, 0, 0, 0.8) !important;
+}
+
+.mdc-text-field--outlined:not(.mdc-text-field--disabled).mdc-text-field--focused .mdc-notched-outline__leading, .mdc-text-field--outlined:not(.mdc-text-field--disabled).mdc-text-field--focused .mdc-notched-outline__notch, .mdc-text-field--outlined:not(.mdc-text-field--disabled).mdc-text-field--focused .mdc-notched-outline__trailing {
+    border-color: var(--blue-color) !important;
+}
+.mdc-floating-label, .mdc-text-field--outlined:not(.mdc-text-field--disabled).mdc-text-field--focused .mdc-floating-label--float-above {
+    color: var(--blue-color) !important;
+    font-weight: bold;
+    font-size: large !important;
+
+}
+
+.material-symbols-outlined {
+    font-variation-settings:
+    'FILL' 1,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 24
+  }

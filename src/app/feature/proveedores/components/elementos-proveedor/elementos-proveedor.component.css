@@ -1,0 +1,58 @@
+.buttons {
+    margin-top: 25px;
+    gap: 12px;
+    justify-content: flex-end;
+    display: flex;
+    width: 100%;
+}
+
+table {
+    width: 100%;
+}
+
+.mat-mdc-form-field {
+    font-size: 14px;
+    width: 100%;
+}
+
+
+.filter {
+    display: flex;
+}
+
+th,
+mat-paginator {
+    font-size: 16px;
+    font-weight: 800;
+    color: black;
+    background-color: #e6e6e6 !important;
+}
+
+td {
+    font-size: 14px;
+    font-weight: 600;
+    color: black;
+    text-decoration: none;
+}
+
+.design {
+    padding: 0;
+}
+
+.search-filter {
+    justify-content: end;
+    width: 100%;
+    margin-top: 10px;
+    margin-left: 18px;
+    margin-right: 14px;
+}
+
+.titleColumHeader,
+.titleColumnCell {
+    width: 18%;
+}
+
+.no-data-cell {
+    width: 100%;
+    padding: 15px;
+}

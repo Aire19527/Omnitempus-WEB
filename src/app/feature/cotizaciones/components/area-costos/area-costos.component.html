@@ -1,0 +1,779 @@
+<div class="container">
+  <form class="down mt-3" [formGroup]="areaCostoFormGroup">
+    <div class="row">
+      <div class="col-lg-6 col-md-6 col-sm-12">
+        <mat-form-field
+          class="form-group"
+          appearance="outline"
+          class="matField"
+        >
+          <mat-label>¿La solicitud es ajuste de una anterior?</mat-label>
+          <mat-select
+            name="isFitLast"
+            formControlName="isFitLast"
+            [disabled]="isStatusDisabled"
+            (selectionChange)="onSolicitudAnterior($event)"
+          >
+            <mat-option [value]="true"> Si </mat-option>
+            <mat-option [value]="false"> No </mat-option>
+          </mat-select>
+          <mat-error *ngIf="areaCostoFormGroup.get('isFitLast')?.errors">
+            Este campo es obligatorio.
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-lg-6 col-md-6 col-sm-12">
+        <mat-form-field
+          class="form-group"
+          appearance="outline"
+          class="matField"
+        >
+          <mat-label class="mb-2">Fecha de la solicitud</mat-label>
+          <input
+            matInput
+            [matDatepicker]="datepickerRequest"
+            class="large-input"
+            placeholder="Fecha"
+            formControlName="applicationRegistrationDate"
+            autocomplete="off"
+            [disabled]="isStatusDisabled"
+            required
+            (keydown.enter)="$event.preventDefault()"
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="datepickerRequest"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #datepickerRequest></mat-datepicker>
+          <mat-error *ngIf="applicationRegistrationDate?.errors">
+            Este campo es obligatorio.
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-lg-6 col-md-6 col-sm-12" *ngIf="isFitLast">
+        <mat-form-field
+          class="form-group"
+          appearance="outline"
+          class="matField"
+        >
+          <mat-label>Solicitud</mat-label>
+          <mat-select
+            (selectionChange)="onRequestNumberChange($event)"
+            name="requestNumber"
+            formControlName="requestNumber"
+            [disableOptionCentering]="true"
+          >
+            <mat-option> Seleccione una opción </mat-option>
+            <mat-option
+              *ngFor="let requests of requestsList"
+              [value]="requests.id"
+            >
+              {{ requests.requestNumber }} - {{ requests.customerName }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="prospectusName?.errors">
+            Este campo es obligatorio.
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div
+        class="col-lg-6 col-md-6 col-sm-12"
+        *ngIf="esServicioCliente || esAdmin"
+      >
+        <mat-form-field
+          class="form-group"
+          appearance="outline"
+          class="matField"
+        >
+          <mat-label>Cliente</mat-label>
+          <mat-select
+            name="customersId"
+            formControlName="customersId"
+            [disableOptionCentering]="true"
+            [disabled]="isStatusDisabled"
+            (openedChange)="getcustomer()"
+          >
+            <mat-option> Seleccione una opción </mat-option>
+            <mat-option
+              *ngFor="let customer of customerList"
+              [value]="customer.id"
+              (click)="onCustomerSelectionChange(customer)"
+            >
+              {{ customer.name }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="customersId?.errors">
+            Este campo es obligatorio.
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-lg-6 col-md-6 col-sm-12" *ngIf="esComercial || esAdmin">
+        <mat-form-field
+          class="form-group"
+          appearance="outline"
+          class="matField"
+        >
+          <mat-label>Nombre del prospecto</mat-label>
+          <input
+            matInput
+            class="large-input"
+            formControlName="prospectusName"
+            type="text"
+            maxLength="100"
+            [disabled]="customersId?.value"
+            autocomplete="off"
+            [disabled]="isStatusDisabled"
+            (keydown.enter)="$event.preventDefault()"
+          />
+          <mat-error
+            *ngIf="
+              areaCostoFormGroup.get('prospectusName')?.hasError('required')
+            "
+          >
+            Este campo es obligatorio.
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-lg-6 col-md-6 col-sm-12" *ngIf="esAdmin">
+        <mat-form-field
+          class="form-group"
+          appearance="outline"
+          class="matField"
+        >
+          <mat-label>Tipo de pago dominical</mat-label>
+          <mat-select
+            name="sundayPayment"
+            formControlName="sundayPayment"
+            [disableOptionCentering]="true"
+            [disabled]="isStatusDisabled"
+            required
+          >
+            <mat-option [value]="1"> Ajustado </mat-option>
+            <mat-option [value]="0"> OT </mat-option>
+          </mat-select>
+          <mat-error *ngIf="sundayPayment?.errors">
+            Este campo es obligatorio.
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-lg-6 col-md-6 col-sm-12">
+        <mat-form-field
+          class="form-group"
+          appearance="outline"
+          class="matField"
+        >
+          <mat-label>Líneas de negocio</mat-label>
+          <mat-select
+            name="bussinesLineId"
+            formControlName="bussinesLineId"
+            [disableOptionCentering]="true"
+            [disabled]="isStatusDisabled"
+            required
+          >
+            <mat-option
+              *ngFor="let bussinesLines of bussinesLinesList"
+              [value]="bussinesLines.id"
+            >
+              {{ bussinesLines.name }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="bussinesLineId?.errors">
+            Este campo es obligatorio.
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-lg-6 col-md-6 col-sm-12">
+        <mat-form-field
+          class="form-group"
+          appearance="outline"
+          class="matField"
+        >
+          <mat-label class="mb-2">Período del contrato</mat-label>
+          <mat-date-range-input [rangePicker]="picker">
+            <input
+              matInput
+              matStartDate
+              class="large-input"
+              placeholder="Fecha inicio"
+              formControlName="contractDateStart"
+              autocomplete="off"
+              [disabled]="isStatusDisabled"
+              (keydown.enter)="$event.preventDefault()"
+            />
+            <input
+              matInput
+              matEndDate
+              class="large-input"
+              placeholder="Fecha final"
+              formControlName="contractDateEnd"
+              [disabled]="isStatusDisabled"
+              autocomplete="off"
+              (keydown.enter)="$event.preventDefault()"
+            />
+          </mat-date-range-input>
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-date-range-picker #picker></mat-date-range-picker>
+          <mat-error
+            *ngIf="contractDateStart?.errors || contractDateEnd?.errors"
+          >
+            Este campo es obligatorio.
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-lg-6 col-md-6 col-sm-12">
+        <mat-form-field
+          class="form-group"
+          appearance="outline"
+          class="matField"
+        >
+          <mat-label class="mb-2">Fecha de inicio del servicio</mat-label>
+          <input
+            matInput
+            [matDatepicker]="datepicker"
+            class="large-input"
+            placeholder="Fecha inicio"
+            formControlName="starServiceDate"
+            autocomplete="off"
+            [disabled]="isStatusDisabled"
+            (keydown.enter)="$event.preventDefault()"
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="datepicker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #datepicker></mat-datepicker>
+          <mat-error *ngIf="contractDateStart?.errors">
+            Este campo es obligatorio.
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-lg-6 col-md-6 col-sm-12" *ngIf="esAdmin">
+        <mat-form-field
+          class="form-group"
+          appearance="outline"
+          class="matField"
+        >
+          <mat-label class="mb-2">Margen horas adicionales</mat-label>
+          <input
+            matInput
+            class="large-input"
+            formControlName="aditionalHoursMargin"
+            type="text"
+            min="0"
+            max="100"
+            maxLength="3"
+            suffix="%"
+            mask="separator.2"
+            thousandSeparator=","
+            decimalMarker="."
+            maxlength="6"
+            autocomplete="off"
+            [disabled]="isStatusDisabled"
+            required
+            (keydown.enter)="$event.preventDefault()"
+          />
+          <mat-error
+            *ngIf="
+              areaCostoFormGroup
+                .get('aditionalHoursMargin')
+                ?.hasError('required')
+            "
+          >
+            Este campo es obligatorio.
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-lg-6 col-md-6 col-sm-12">
+        <mat-form-field
+          class="form-group"
+          appearance="outline"
+          class="matField"
+        >
+          <mat-label>¿Aplica pago de día 31? </mat-label>
+          <mat-select
+            name="pay31Day"
+            formControlName="pay31Day"
+            [disableOptionCentering]="true"
+            [disabled]="isStatusDisabled"
+          >
+            <mat-option [value]="true"> Si </mat-option>
+            <mat-option [value]="false"> No </mat-option>
+          </mat-select>
+          <mat-error *ngIf="pay31Day?.errors">
+            Este campo es obligatorio.
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-lg-6 col-md-6 col-sm-12">
+        <mat-form-field
+          class="form-group"
+          appearance="outline"
+          class="matField"
+        >
+          <mat-label>¿Aplica horas de capacitación Ley 50?</mat-label>
+          <mat-select
+            name="law50"
+            formControlName="law50"
+            [disableOptionCentering]="true"
+            [disabled]="isStatusDisabled"
+          >
+            <mat-option [value]="true"> Si </mat-option>
+            <mat-option [value]="false"> No </mat-option>
+          </mat-select>
+          <mat-error *ngIf="law50?.errors">
+            Este campo es obligatorio.
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-lg-6 col-md-6 col-sm-12" *ngIf="esAdmin">
+        <mat-form-field
+          class="form-group"
+          appearance="outline"
+          class="matField"
+        >
+          <mat-label class="mb-2">Comisión</mat-label>
+          <input
+            matInput
+            class="large-input"
+            formControlName="commission"
+            type="text"
+            min="0"
+            max="100"
+            maxLength="3"
+            suffix="%"
+            mask="separator.2"
+            [disabled]="isStatusDisabled"
+            thousandSeparator=","
+            decimalMarker="."
+            maxlength="6"
+            required
+            autocomplete="off"
+            (keydown.enter)="$event.preventDefault()"
+          />
+          <mat-error
+            *ngIf="areaCostoFormGroup.get('commission')?.hasError('required')"
+          >
+            Este campo es obligatorio.
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-lg-6 col-md-6 col-sm-12" *ngIf="esAdmin">
+        <mat-form-field
+          class="form-group"
+          appearance="outline"
+          class="matField"
+        >
+          <mat-label class="mb-2">Costos indirectos</mat-label>
+          <input
+            matInput
+            class="large-input"
+            formControlName="indirectCosts"
+            type="text"
+            min="0"
+            max="100"
+            maxLength="3"
+            suffix="%"
+            mask="separator.2"
+            [disabled]="isStatusDisabled"
+            thousandSeparator=","
+            decimalMarker="."
+            maxlength="6"
+            required
+            autocomplete="off"
+            (keydown.enter)="$event.preventDefault()"
+          />
+          <mat-error
+            *ngIf="
+              areaCostoFormGroup.get('indirectCosts')?.hasError('required')
+            "
+          >
+            Este campo es obligatorio.
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-lg-6 col-md-6 col-sm-12" *ngIf="esAdmin">
+        <mat-form-field
+          class="form-group"
+          appearance="outline"
+          class="matField"
+        >
+          <mat-label class="mb-2">Costos G&A</mat-label>
+          <input
+            matInput
+            class="large-input"
+            formControlName="gyaCosts"
+            type="text"
+            min="0"
+            max="100"
+            maxLength="3"
+            suffix="%"
+            mask="separator.2"
+            [disabled]="isStatusDisabled"
+            thousandSeparator=","
+            decimalMarker="."
+            maxlength="6"
+            required
+            autocomplete="off"
+            (keydown.enter)="$event.preventDefault()"
+          />
+          <mat-error
+            *ngIf="areaCostoFormGroup.get('gyaCosts')?.hasError('required')"
+          >
+            Este campo es obligatorio.
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-lg-6 col-md-6 col-sm-12" *ngIf="esAdmin">
+        <mat-form-field
+          class="form-group"
+          appearance="outline"
+          class="matField"
+        >
+          <mat-label class="mb-2">Industria y comercio</mat-label>
+          <input
+            matInput
+            class="large-input"
+            formControlName="industryCommerce"
+            type="text"
+            min="0"
+            max="100"
+            maxLength="3"
+            suffix="%"
+            [disabled]="isStatusDisabled"
+            mask="separator.2"
+            thousandSeparator=","
+            decimalMarker="."
+            maxlength="6"
+            required
+            autocomplete="off"
+            (keydown.enter)="$event.preventDefault()"
+          />
+          <mat-error
+            *ngIf="
+              areaCostoFormGroup.get('industryCommerce')?.hasError('required')
+            "
+          >
+            Este campo es obligatorio.
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-lg-6 col-md-6 col-sm-12">
+        <mat-form-field
+          class="form-group"
+          appearance="outline"
+          class="matField"
+        >
+          <mat-label>¿Aplica reinversión?</mat-label>
+          <mat-select
+            name="reinvestment"
+            formControlName="reinvestment"
+            [disableOptionCentering]="true"
+            [disabled]="isStatusDisabled"
+            required
+          >
+            <mat-option [value]="true"> Si </mat-option>
+            <mat-option [value]="false"> No </mat-option>
+          </mat-select>
+          <mat-error *ngIf="reinvestment?.errors">
+            Este campo es obligatorio.
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="col-lg-6 col-md-6 col-sm-12" *ngIf="esAdmin">
+      <div class="justify-content-start my-3">
+        <button
+          mat-raised-button
+          class="btnSize button-primary text-dark ml-2"
+          (click)="dataCreatePoliza()"
+          *ngIf="!isStatusDisabled"
+        >
+          Agregar póliza
+        </button>
+      </div>
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12 mb-5" *ngIf="esAdmin">
+      <div class="mat-elevation-z8">
+        <table mat-table [dataSource]="dataSourcePolicy" matSort>
+          <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Id</th>
+            <td mat-cell *matCellDef="let row">{{ row.id }}</td>
+          </ng-container>
+          <ng-container matColumnDef="policyName">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Póliza</th>
+            <td mat-cell *matCellDef="let row">{{ row.policyName }}</td>
+          </ng-container>
+          <ng-container matColumnDef="percentage">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              Porcentaje
+            </th>
+            <td mat-cell *matCellDef="let row">{{ row.percentage + "%" }}</td>
+          </ng-container>
+          <ng-container matColumnDef="acciones">
+            <th mat-header-cell *matHeaderCellDef style="text-align: end">
+              Acciones
+            </th>
+            <td
+              mat-cell
+              *matCellDef="let row; let i = index"
+              style="text-align: end"
+            >
+              <button mat-icon-button [matMenuTriggerFor]="menu">
+                <mat-icon>more_vert</mat-icon>
+              </button>
+              <mat-menu #menu="matMenu" yPosition="below">
+                <button
+                  mat-menu-item
+                  (click)="dataEditPolicy(i)"
+                  [disabled]="isStatusDisabled"
+                >
+                  <mat-icon>edit</mat-icon>
+                  <span>Editar</span>
+                </button>
+                <button
+                  mat-menu-item
+                  (click)="deleteDataPolicy(i)"
+                  [disabled]="isStatusDisabled"
+                >
+                  <mat-icon>delete</mat-icon>
+                  <span>Eliminar</span>
+                </button>
+              </mat-menu>
+            </td>
+          </ng-container>
+          <tr
+            mat-header-row
+            *matHeaderRowDef="displayedColumnsPoliza; sticky: true"
+          ></tr>
+          <tr
+            mat-row
+            *matRowDef="let row; columns: displayedColumnsPoliza"
+          ></tr>
+          <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell no-data-cell" colspan="4">
+              No se encontró datos para esta tabla
+            </td>
+          </tr>
+        </table>
+        <mat-paginator
+          [length]="policyQuotation"
+          [pageSizeOptions]="[10, 15, 20, 100]"
+          #policyPaginator
+        ></mat-paginator>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-6 col-md-6 col-sm-12">
+        <mat-form-field
+          class="form-group"
+          appearance="outline"
+          class="matField"
+        >
+          <mat-label>¿Se requieren elementos a nivel de solicitud?</mat-label>
+          <mat-select
+            name="elementRequired"
+            formControlName="elementRequired"
+            [disableOptionCentering]="true"
+            [disabled]="isStatusDisabled"
+            required
+          >
+            <mat-option [value]="true"> Si </mat-option>
+            <mat-option [value]="false"> No </mat-option>
+          </mat-select>
+          <mat-error *ngIf="elementRequired?.errors">
+            Este campo es obligatorio.
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div
+        class="col-lg-6 col-md-6 col-sm-12"
+        *ngIf="elementRequired?.value === true"
+      >
+        <div class="d-flex justify-content-end my-3">
+          <button
+            mat-raised-button
+            class="btnSize button-primary text-dark ml-2"
+            (click)="dataCreate()"
+            *ngIf="!isStatusDisabled"
+          >
+            Agregar elemento
+          </button>
+        </div>
+      </div>
+      <div
+        class="col-lg-12 col-md-12 col-sm-12"
+        *ngIf="elementRequired?.value === true"
+      >
+        <div class="mat-elevation-z8">
+          <table mat-table [dataSource]="dataSourceElement" matSort #table2 class="table-elements">
+            <ng-container matColumnDef="id">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Id</th>
+              <td mat-cell *matCellDef="let row">{{ row.id }}</td>
+            </ng-container>
+            <ng-container matColumnDef="elementTypeName">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                Clasificación
+              </th>
+              <td mat-cell *matCellDef="let row">{{ row.elementTypeName }}</td>
+            </ng-container>
+            <ng-container matColumnDef="elementName">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                Elemento
+              </th>
+              <td
+                mat-cell
+                *matCellDef="let row"
+                [matTooltip]="
+                  row.elementName.length > 50 ? row.elementName : ''
+                "
+              >
+                {{
+                  row.elementName.length > 50
+                    ? (row.elementName | slice : 0 : 50) + "..."
+                    : row.elementName
+                }}
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="elementProviderName">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                Proveedor
+              </th>
+              <td mat-cell *matCellDef="let row">
+                {{ row.elementProviderName }}
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="currentPrice">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Valor</th>
+              <td mat-cell *matCellDef="let row">
+                {{ "$" + formatUnitPrice(row.value) }}
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="depreciation">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                Depreciación
+              </th>
+              <td mat-cell *matCellDef="let row">{{ row.depreciation }}</td>
+            </ng-container>
+            <ng-container matColumnDef="amount">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                Cantidad
+              </th>
+              <td mat-cell *matCellDef="let row">{{ row.amount }}</td>
+            </ng-container>
+            <ng-container matColumnDef="acciones">
+              <th mat-header-cell *matHeaderCellDef style="text-align: end">
+                Acciones
+              </th>
+              <td
+                mat-cell
+                *matCellDef="let row; let i = index"
+                style="text-align: end"
+              >
+                <button mat-icon-button [matMenuTriggerFor]="menu">
+                  <mat-icon>more_vert</mat-icon>
+                </button>
+                <mat-menu #menu="matMenu" yPosition="below">
+                  <button
+                    mat-menu-item
+                    (click)="dataEditElement(i)"
+                    [disabled]="isStatusDisabled"
+                  >
+                    <mat-icon>edit</mat-icon>
+                    <span>Editar</span>
+                  </button>
+                  <button
+                    mat-menu-item
+                    (click)="deleteDataElement(i)"
+                    [disabled]="isStatusDisabled"
+                  >
+                    <mat-icon>delete</mat-icon>
+                    <span>Eliminar</span>
+                  </button>
+                </mat-menu>
+              </td>
+            </ng-container>
+            <tr
+              mat-header-row
+              *matHeaderRowDef="displayedColumnsElement; sticky: true"
+            ></tr>
+            <tr
+              mat-row
+              *matRowDef="let row; columns: displayedColumnsElement"
+            ></tr>
+            <tr class="mat-row" *matNoDataRow>
+              <td class="mat-cell no-data-cell" colspan="4">
+                No se encontró datos para esta tabla
+              </td>
+            </tr>
+          </table>
+
+          <mat-paginator
+            [length]="elementQuotation"
+            [pageSizeOptions]="[10, 15, 20, 100]"
+            #elementPaginator="matPaginator"
+          ></mat-paginator>
+        </div>
+      </div>
+
+      <div class="col-lg-12 col-md-12 col-sm-12 my-5">
+        <mat-form-field
+          class="form-group"
+          appearance="outline"
+          class="matField"
+        >
+          <mat-label matLabel class="mb-5"
+            >Observaciones adicionales del servicio</mat-label
+          >
+          <textarea
+            matInput
+            formControlName="observations"
+            rows="4"
+            type="text"
+            maxlength="500"
+            [disabled]="isStatusDisabled"
+            (keydown.enter)="$event.preventDefault()"
+          ></textarea>
+          <mat-error
+            *ngIf="areaCostoFormGroup.get('observations')?.hasError('required')"
+          >
+            Este campo es obligatorio.
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="buttons">
+        <mat-card-actions class="d-flex justify-content-end">
+          <button
+            mat-raised-button
+            class="btnSize cancelar text-dark mx-2"
+            (click)="goBack()"
+          >
+            Cancelar
+          </button>
+          <button
+            mat-raised-button
+            class="btnSize guardar text-dark mx-2"
+            (click)="saveUpdateCosts(true)"
+            *ngIf="!isStatusDisabled"
+            [disabled]="areaCostoFormGroup.invalid"
+          >
+            Guardar
+          </button>
+          <button
+            mat-raised-button
+            matStepperNext
+            class="btnSize cancelar text-dark"
+            (click)="saveUpdateCosts(false)"
+            [disabled]="areaCostoFormGroup.invalid"
+          >
+            Siguiente
+          </button>
+        </mat-card-actions>
+      </div>
+    </div>
+  </form>
+</div>

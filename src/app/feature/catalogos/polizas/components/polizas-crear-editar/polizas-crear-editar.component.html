@@ -1,0 +1,104 @@
+<div mat-dialog-title class="container-title-modal">
+  {{ data ? "Editar" : "Crear" }} póliza
+</div>
+
+<mat-dialog-content class="custom-dialog-content">
+  <form class="mt-2" [formGroup]="polizaFormGroup">
+    <div class="row">
+      <div class="col-lg-6 col-md-6 col-sm-12">
+        <mat-form-field
+          class="form-group"
+          appearance="outline"
+          class="matField"
+        >
+          <mat-label matLabel class="mb-2">Nombre</mat-label>
+          <input matInput formControlName="name" maxlength="100" autocomplete="off"/>
+          <mat-error
+            class="helper-text error"
+            *ngIf="
+              polizaFormGroup.controls['name']?.hasError('required') &&
+              polizaFormGroup.get('name')?.touched
+            "
+          >
+            * Este campo es requerido.
+          </mat-error>
+          <mat-error
+            class="helper-text error"
+            *ngIf="
+              polizaFormGroup.controls['name']?.hasError('maxlength') &&
+              polizaFormGroup.controls['name']?.touched
+            "
+          >
+            * El máximo de carácteres es de 100.
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-lg-6 col-md-6 col-sm-12">
+        <mat-form-field
+          class="form-group"
+          appearance="outline"
+          class="matField"
+        >
+          <mat-label matLabel class="mb-2">Porcentaje</mat-label>
+          <input
+            matInput
+            formControlName="percentage"
+            type="text"
+            suffix="%"
+            mask="separator.2"
+            thousandSeparator=","
+            decimalMarker="."
+            maxlength="6"
+            autocomplete="off"
+          />
+          <mat-error
+            class="helper-text error"
+            *ngIf="
+              polizaFormGroup.controls['percentage']?.hasError('required') &&
+              polizaFormGroup.get('percentage')?.touched
+            "
+          >
+            * Este campo es requerido.
+          </mat-error>
+          <mat-error
+            class="helper-text error"
+            *ngIf="
+              polizaFormGroup.controls['percentage']?.hasError('min') &&
+              polizaFormGroup.get('percentage')?.touched
+            "
+          >
+            * El porcentaje debe ser mayor o igual a 0.
+          </mat-error>
+
+          <mat-error
+            class="helper-text error"
+            *ngIf="
+              polizaFormGroup.controls['percentage']?.hasError('max') &&
+              polizaFormGroup.get('percentage')?.touched
+            "
+          >
+            * El porcentaje debe ser menor o igual a 100.
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions class="d-flex justify-content-end">
+  <button
+    mat-raised-button
+    class="btnSize cancelar text-dark mx-2"
+    [mat-dialog-close]="false"
+  >
+    Cancelar
+  </button>
+  <button
+    mat-raised-button
+    class="btnSize guardar text-dark mx-3"
+    (click)="saveUpdatePolicy()"
+    [disabled]="polizaFormGroup.invalid"
+  >
+    Guardar
+  </button>
+</mat-dialog-actions>

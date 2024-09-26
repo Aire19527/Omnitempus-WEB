@@ -1,0 +1,59 @@
+<form [formGroup]="permissionForm">
+  <div class="input-group mt-1 mb-2">
+    <span class="input-group-text"><i class="fa fa-search"></i></span>
+    <input
+      [formControl]="searchInput"
+      type="text"
+      placeholder="Buscar"
+      class="form-control"
+      (input)="onSearch()"
+      #input
+    />
+  </div>
+
+  <h3>
+    Selecciona los permisos de <strong> {{ data?.name | lowercase }}</strong
+    >:
+  </h3>
+  <div class="ambit-container">
+    <div *ngFor="let typePermission of typePermissions" class="ambit">
+      <h3 class="titleAcordeon">{{ typePermission }}</h3>
+      <div *ngFor="let item of filteredPermission">
+        <ng-container *ngIf="item.typePermission === typePermission">
+          <mat-checkbox
+            class="subTitleAcordeon"
+            [formControlName]="item.description"
+            >{{ item.description }}</mat-checkbox
+          >
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</form>
+
+<div class="buttons d-flex justify-content-end">
+  <button
+    mat-raised-button
+    matStepperPrevious
+    class="btnSize cancelar text-dark mx-2"
+  >
+    Atrás
+  </button>
+
+  <button
+    mat-raised-button
+    class="btnSize guardar text-dark mx-2"
+    [disabled]="permissionForm.invalid"
+    (click)="savePermission('guardar')"
+  >
+    Guardar
+  </button>
+  <button
+    mat-raised-button
+    matStepperNext
+    class="btnSize cancelar text-dark"
+    (click)="goBack()"
+  >
+    Salir
+  </button>
+</div>

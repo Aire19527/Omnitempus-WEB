@@ -1,0 +1,115 @@
+.content {
+    width: 100%;
+    background-color: #fff;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+}
+
+.graphics{
+    width: 100%;
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+}  
+
+.graphic-bar-time{
+    width: 100%;
+    display: block;
+    justify-content: center; 
+    align-items: center;
+}
+
+.graphic-bar {
+    width: 100%; 
+    justify-content: center;
+    display: block;
+}
+
+.paragraph {
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.titleGraphics{
+    font-size: 16px;
+    font-weight: 900 !important;
+    color: black !important;
+}
+
+.gray {
+    color: black;
+    font-weight: 500;
+    font-size: 16px;
+}
+
+.mat-card {
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+    width: 100%;
+    height: 100%;
+}
+
+.values{
+    font-size: 36px;
+    color: #164469 !important;
+    font-weight: 700;
+    font-family: 'Futura';
+}
+
+.color-border {
+    border: 1px solid #D4D9DE !important;
+    border-radius: 8px; 
+}
+
+.color-border-little{
+    border-radius: 8px; 
+    width: 100%;
+    height: 75%;
+    background: #EEF2FF;
+}
+
+.color-border-little2{
+    border-radius: 8px; 
+    width: 100%;
+    height: 75%;
+    background: #EEF2FF;
+}
+
+
+.card-content {
+    height: 100%;
+}
+
+.ghapics-pie-doughnut .col-lg-6, .ghapics-pie-doughnut .col-md-6, .ghapics-pie-doughnut .col-sm-12 {
+    display: flex;
+}
+
+
+.approval {
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.medicions, .ofertas {
+    display: flex;
+    flex-direction: column;
+}
+
+
+.measure-days {
+    display: flex;
+    justify-content: center;
+}
+
+.measure-days h6 {
+    text-align: center;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+.custom-dialog-content {
+    overflow-x: hidden;
+}

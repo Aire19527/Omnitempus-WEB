@@ -1,0 +1,39 @@
+<div class="row">
+  <table mat-table [dataSource]="dataSource" matSort style="width: 100%">
+    <ng-container matColumnDef="taxName">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Elemento</th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.taxName }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="percentage">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Porcentaje</th>
+
+      <td mat-cell *matCellDef="let element">
+        {{ formatNumber(element.percentage, CONS_PORCENTAJE) }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="cost">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Valor</th>
+
+      <td mat-cell *matCellDef="let element">
+        {{ formatNumber(element.cost, CONS_MONEDA) }}
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    <tr class="mat-row" *matNoDataRow>
+      <td class="mat-cell no-data-cell" colspan="4">
+        No hay datos para mostrar.
+      </td>
+    </tr>
+  </table>
+  <mat-paginator
+    [pageSizeOptions]="[10, 25, 50, 100]"
+    aria-label="Select page of users"
+  >
+  </mat-paginator>
+</div>

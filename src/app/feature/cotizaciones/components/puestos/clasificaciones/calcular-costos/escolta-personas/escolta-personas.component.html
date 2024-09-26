@@ -1,0 +1,404 @@
+<div class="row">
+  <div class="row" style="margin-bottom: 20px !important">
+    <div class="col-md-6 my-3">
+      <table class="default">
+        <tr>
+          <th class="subTitleAcordeon">Tarifa mensual del servicio</th>
+          <td class="subTitleAcordeon" style="padding-left: 25px !important">
+            {{
+              (costos.objectiveValue != 0
+                ? costos.objectiveValue
+                : costos.costMonthlyService
+              ) | currency
+            }}
+          </td>
+        </tr>
+      </table>
+    </div>
+    <!-- <div class="col-md-6">
+      <div align="end">
+        <button
+          mat-raised-button
+          class="guardar text-dark"
+          style="margin-top: 10px"
+          (click)="calculateMonthlyTariff()"
+        >
+          Calcular tarifa mensual
+        </button>
+      </div>
+    </div> -->
+  </div>
+
+  <form class="mt-2" [formGroup]="calcularIVASVFormGroup">
+    <div class="row" style="margin-bottom: 15px !important">
+      <div class="col-lg-6 col-md-6 col-sm-12">
+        <mat-form-field
+          class="form-group"
+          appearance="outline"
+          class="matField"
+        >
+          <mat-label class="mb-2">Tipo de cálculo de IVA</mat-label>
+          <mat-select
+            [disableOptionCentering]="true"
+            formControlName="tipoIVA"
+            [disabled]="isStatusDisabled"
+          >
+            <mat-option value="IVA directo"> IVA directo </mat-option>
+            <mat-option value="IVA sobre AIU"> IVA sobre AIU </mat-option>
+          </mat-select>
+          <mat-error *ngIf="calcularIVASVFormGroup.get('tipoIVA')?.errors">
+            Este campo es obligatorio.
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="col-lg-6 col-md-6 col-sm-12">
+        <div align="end">
+          <button
+            mat-raised-button
+            class="guardar text-dark"
+            [disabled]="calcularIVASVFormGroup.invalid"
+            (click)="calculateServiceWithIVA()"
+            [disabled]="isStatusDisabled"
+          >
+            Calcular IVA
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <div class="row">
+    <div class="col-md-7">
+      <table class="default">
+        <tr>
+          <th></th>
+          <td class="subTitleAcordeon" style="padding-left: 25px !important">
+            {{ costos.ivaPercentage }}%
+          </td>
+        </tr>
+        <tr>
+          <th class="subTitleAcordeon">IVA</th>
+          <td class="subTitleAcordeon" style="padding-left: 25px !important">
+            {{ costos.ivaCosts | currency }}
+          </td>
+        </tr>
+        <tr>
+          <th class="subTitleAcordeon">Tarifa mensual del servicio con IVA</th>
+          <td class="subTitleAcordeon" style="padding-left: 25px !important">
+            {{ costos.serviceWithIVA | currency }}
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <form class="mt-5" [formGroup]="tarifaMinimaSVFormGroup">
+    <div class="row" style="margin-bottom: 15px !important">
+      <div class="col-lg-6 col-md-6 col-sm-12">
+        <mat-form-field
+          class="form-group"
+          appearance="outline"
+          class="matField"
+        >
+          <mat-label class="mb-2">¿Aplica tarifa mínima de la SV?</mat-label>
+          <mat-select
+            name="hasSeverancePay"
+            [disableOptionCentering]="true"
+            formControlName="aplicaTarifaMinimaSV"
+          >
+            <mat-option [value]="true"> Si </mat-option>
+            <mat-option [value]="false"> No </mat-option>
+          </mat-select>
+          <mat-error
+            *ngIf="tarifaMinimaSVFormGroup.get('aplicaTarifaMinimaSV')?.errors"
+          >
+            Este campo es obligatorio.
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div
+        class="col-lg-6 col-md-6 col-sm-12"
+        *ngIf="
+          tarifaMinimaSVFormGroup.get('aplicaTarifaMinimaSV')?.value == true
+        "
+      >
+        <mat-form-field
+          class="form-group"
+          appearance="outline"
+          class="matField"
+        >
+          <mat-label class="mb-2">Tarifa del servicio</mat-label>
+          <mat-select
+            name="hasSeverancePay"
+            [disableOptionCentering]="true"
+            formControlName="servicioTarifaId"
+            (selectionChange)="onSelectTariff($event.value)"
+          >
+            <mat-option
+              *ngFor="let tarifa of tarifaServicios"
+              [value]="tarifa.id"
+            >
+              {{ tarifa.name }} - {{ tarifa.percentage }}%
+            </mat-option>
+          </mat-select>
+          <mat-error
+            *ngIf="tarifaMinimaSVFormGroup.get('servicioTarifaId')?.errors"
+          >
+            Este campo es obligatorio.
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+  </form>
+
+  <div
+    class="row"
+    style="margin-bottom: 15px !important"
+    *ngIf="tarifaMinimaSVFormGroup.get('aplicaTarifaMinimaSV')?.value == true"
+  >
+    <div class="col-md-6">
+      <div align="start">
+        <button
+          mat-raised-button
+          class="guardar text-dark"
+          [disabled]="tarifaMinimaSVFormGroup.invalid"
+          (click)="minimumTariff()"
+          [disabled]="isStatusDisabled"
+        >
+          Calcular tarifa mínima SV
+        </button>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <table class="default">
+        <tr>
+          <th class="subTitleAcordeon">Tarifa mínima mensual SV</th>
+          <td class="subTitleAcordeon" style="padding-left: 25px !important">
+            {{ valueMinimumTariff | currency }}
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <form class="mt-2" [formGroup]="recalcularSVFormGroup">
+    <div class="row">
+      <div class="col-lg-6 col-md-6 col-sm-12">
+        <mat-form-field
+          class="form-group"
+          appearance="outline"
+          class="matField"
+        >
+          <mat-label class="mb-2">¿Aplica valor objetivo?</mat-label>
+          <mat-select formControlName="aplicaValorObjetivo">
+            <mat-option [value]="true"> Si </mat-option>
+            <mat-option [value]="false"> No </mat-option>
+          </mat-select>
+          <mat-error
+            *ngIf="recalcularSVFormGroup.get('aplicaValorObjetivo')?.errors"
+          >
+            Este campo es obligatorio.
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div
+        class="col-lg-6 col-md-6 col-sm-12"
+        *ngIf="recalcularSVFormGroup.get('aplicaValorObjetivo')?.value == true"
+      >
+        <mat-form-field
+          class="form-group"
+          appearance="outline"
+          class="matField"
+        >
+          <mat-label class="mb-2"
+            >¿Sobre tarifa mensual del servicio o AIU?</mat-label
+          >
+          <mat-select
+            (selectionChange)="selectedTarifaServicioMensual()"
+            formControlName="sobreTarifaMensualServicioAIU"
+          >
+            <mat-option [value]="0"> Tarifa mensual del servicio </mat-option>
+            <mat-option [value]="1"> AIU </mat-option>
+          </mat-select>
+          <mat-error
+            *ngIf="
+              recalcularSVFormGroup.get('sobreTarifaMensualServicioAIU')?.errors
+            "
+          >
+            Este campo es obligatorio.
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div
+      class="row"
+      *ngIf="
+        recalcularSVFormGroup.get('aplicaValorObjetivo')?.value == true &&
+        recalcularSVFormGroup.get('sobreTarifaMensualServicioAIU')?.value == '0'
+      "
+    >
+      <div class="col-md-6 col-sm-12 col-lg-6">
+        <mat-form-field
+          class="form-group"
+          appearance="outline"
+          class="matField"
+        >
+          <mat-label matLabel class="mb-2">Valor objetivo</mat-label>
+          <input
+            formControlName="valorObjetivo"
+            matInput
+            type="text"
+            prefix="$"
+            mask="separator.2"
+            thousandSeparator=","
+            decimalMarker="."
+            min="1"
+            max="100000000"
+            maxlength="16"
+            placeholder="Valor"
+            autocomplete="off"
+          />
+          <mat-error
+            class="helper-text error"
+            *ngIf="
+              recalcularSVFormGroup.controls['valorObjetivo']?.hasError(
+                'required'
+              ) && recalcularSVFormGroup.get('valorObjetivo')?.touched
+            "
+          >
+            * Este campo es requerido.
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="col-lg-6 col-md-6 col-sm-12">
+        <div align="end">
+          <button
+            mat-raised-button
+            class="guardar text-dark"
+            [disabled]="recalcularSVFormGroup.invalid"
+            (click)="calculateObjectiveValue()"
+            [disabled]="isStatusDisabled"
+          >
+            Recalcular
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="row"
+      *ngIf="
+        recalcularSVFormGroup.get('aplicaValorObjetivo')?.value == true &&
+        recalcularSVFormGroup.get('sobreTarifaMensualServicioAIU')?.value == '1'
+      "
+    >
+      <div class="col-md-6 col-sm-12 col-lg-6">
+        <mat-form-field
+          class="form-group"
+          appearance="outline"
+          class="matField"
+        >
+          <mat-label matLabel class="mb-2">Valor objetivo</mat-label>
+          <input
+            formControlName="valorObjetivo"
+            matInput
+            type="text"
+            suffix="%"
+            mask="separator.2"
+            thousandSeparator=","
+            decimalMarker="."
+            maxlength="6"
+            placeholder="Porcentaje"
+            autocomplete="off"
+          />
+          <mat-error
+            class="helper-text error"
+            *ngIf="
+              recalcularSVFormGroup.controls['valorObjetivo']?.hasError(
+                'required'
+              ) && recalcularSVFormGroup.get('valorObjetivo')?.touched
+            "
+          >
+            * Este campo es requerido.
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="col-lg-6 col-md-6 col-sm-12">
+        <div align="end">
+          <button
+            mat-raised-button
+            class="guardar text-dark"
+            [disabled]="recalcularSVFormGroup.invalid"
+            (click)="calculateObjectiveValue()"
+            [disabled]="isStatusDisabled"
+          >
+            Recalcular
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <!-- <form class="mt-2" [formGroup]="calcularIVASVFormGroup">
+    <div class="row" style="margin-bottom: 15px !important">
+      <div class="col-lg-6 col-md-6 col-sm-12">
+        <mat-form-field
+          class="form-group"
+          appearance="outline"
+          class="matField"
+        >
+          <mat-label class="mb-2">Tipo de cálculo de IVA</mat-label>
+          <mat-select [disableOptionCentering]="true" formControlName="tipoIVA">
+            <mat-option value="IVA directo"> IVA directo </mat-option>
+            <mat-option value="IVA sobre AIU"> IVA sobre AIU </mat-option>
+          </mat-select>
+          <mat-error *ngIf="calcularIVASVFormGroup.get('tipoIVA')?.errors">
+            Este campo es obligatorio.
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="col-lg-6 col-md-6 col-sm-12">
+        <div align="end">
+          <button
+            mat-raised-button
+            class="guardar text-dark"
+            [disabled]="calcularIVASVFormGroup.invalid"
+            (click)="calculateServiceWithIVA()"
+          >
+            Calcular IVA
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <div class="row">
+    <div class="col-md-7">
+      <table class="default">
+        <tr>
+          <th class="subTitleAcordeon">IVA</th>
+          <td class="subTitleAcordeon" style="padding-left: 25px !important">
+            {{ servicioIVA.ivaPercentage }}%
+            <br />
+            {{ servicioIVA.ivaCosts | currency }}
+            <hr />
+          </td>
+        </tr>
+        <tr>
+          <th class="subTitleAcordeon">Tarifa mensual del servicio con IVA</th>
+          <td class="subTitleAcordeon" style="padding-left: 25px !important">
+            {{ servicioIVA.serviceWithIVA | currency }}
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div> -->
+</div>

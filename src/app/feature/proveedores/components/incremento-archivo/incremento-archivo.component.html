@@ -1,0 +1,30 @@
+<div class="container-fluid">
+  <div class="row container-title-header">
+    <div class="col-md-8" align="start">
+      <h5 class="title">{{ title }}</h5>
+    </div>
+  </div>
+</div>
+
+<form [formGroup]="FormGroup" (ngSubmit)="uploadFile(FormGroup.value)">
+  <div class="container my-5">
+    <p class="text-disegn">Sube el archivo de Excel para registrar los incrementos de los elementos de cada uno de
+      tus
+      proveedores.</p>
+    <div class="content-discharge">
+      <span class="text-disegn">Subir archivo</span><br>
+      <span class="text-disegn">Al finalizar el diligenciamiento del archivo con toda la información requerida,
+        puedes
+        subirlo aquí.</span>
+      <div class="file-selection">
+        <img src="../../../../../assets/imgs/icon_descar-preview.png" style="width: 30%; display: flex;">
+        <span class="text-disegn">
+          <label for="fileInput" class="textColor underline-on-hover">Selecciona el archivo desde tu dispositivo.</label>
+          <input id="fileInput" type="file" style="display:none" (change)="onFileSelected($event)"><br>
+          <span *ngIf="selectedFile" class="d-block text-center">{{ selectedFile.name }}</span>
+        </span>
+        <button class="btn guardar my-3" type="submit">Aplicar incremento</button>
+      </div>
+    </div>
+  </div>
+</form>

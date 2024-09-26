@@ -1,0 +1,33 @@
+<div class="container-fluid">
+  <div class="row container-title-header">
+    <div class="col-md-6" align="start">
+      <h5 class="title">Festivos</h5>
+    </div>
+
+    <div class="col-md-6" align="end" style="padding-top: 8px">
+      <button
+        mat-raised-button
+        class="button-primary text-dark"
+        (click)="openDialog('crear')"
+      >
+        Crear
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid container-padding">
+    <div class="day-header-cell">
+        <full-calendar [options]="calendarOptions">
+            <ng-template #eventContent let-arg>
+              <div class="event-content">
+                <b>{{ arg.timeText }}</b>
+                <i [ngClass]="{'organized-comment': arg.event.title.length >= 14}">{{ arg.event.title }}</i>
+              </div>
+              <div class="icon" (click)="$event.stopPropagation()">
+                <mat-icon class="delete-icon" (click)="deleteHolidayById(arg.event)">delete</mat-icon>
+              </div>
+            </ng-template>
+          </full-calendar>
+    </div>
+</div>
